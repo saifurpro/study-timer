@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>স্টাডি টাইমার</title>
+<style>
+:root{--bg:#f4f5fb;--card:#fff;--tx:#1b1e33;--mut:#7a7f9e;--ac:#6c4cf5;--ac2:#a78bfa;--ok:#12b886;--line:#e6e8f3;--warn:#f59f00;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1220;--card:#181c30;--tx:#eef0ff;--mut:#8c92b5;--ac:#8b72ff;--ac2:#5b43d6;--ok:#2fd18b;--line:#262b47;--warn:#ffc233;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0f1220;--card:#181c30;--tx:#eef0ff;--mut:#8c92b5;--ac:#8b72ff;--ac2:#5b43d6;--ok:#2fd18b;--line:#262b47;--warn:#ffc233;color-scheme:dark}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:"Hind Siliguri","Noto Sans Bengali",system-ui,sans-serif;display:flex;justify-content:center}
+.app{width:100%;max-width:440px;padding:16px 16px 40px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;margin-bottom:12px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+h1{font-size:20px;margin:0}
+.mut{color:var(--mut);font-size:13px}
+.pill{background:var(--bg);border:1px solid var(--line);border-radius:99px;padding:5px 11px;font-size:13px;font-weight:600}
+.bar{height:8px;background:var(--line);border-radius:9px;overflow:hidden;margin-top:8px}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--ac2),var(--ac));width:0;transition:width .4s}
+.ringwrap{position:relative;width:240px;height:240px;margin:6px auto}
+svg.ring{width:100%;height:100%;transform:rotate(-90deg)}
+.ring circle{fill:none;stroke-width:14;stroke-linecap:round}
+.ring .bg{stroke:var(--line)}.ring .fg{stroke:var(--ac);transition:stroke-dashoffset .3s}
+.center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.av{font-size:44px;line-height:1;transition:transform .3s}.av.run{animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-5px) scale(1.06)}}
+.time{font-size:38px;font-weight:700;font-variant-numeric:tabular-nums;margin-top:4px}
+.chips{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:6px 0 14px}
+.chip{border:1px solid var(--line);background:var(--bg);color:var(--tx);border-radius:99px;padding:7px 14px;font:inherit;font-size:14px;cursor:pointer}
+.chip.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.btns{display:flex;gap:10px}
+button.b{flex:1;border:0;border-radius:16px;padding:15px;font:inherit;font-size:17px;font-weight:700;cursor:pointer;color:#fff;background:var(--ac)}
+button.b.sec{background:var(--bg);color:var(--tx);border:1px solid var(--line)}
+button.b.stop{background:#e8590c}
+button:disabled{opacity:.4}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}
+.grid b{display:block;font-size:20px}
+.week{display:flex;align-items:flex-end;justify-content:space-between;height:110px;gap:6px;margin-top:10px}
+.col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;font-size:11px;color:var(--mut)}
+.col i{width:100%;max-width:26px;border-radius:7px 7px 3px 3px;background:var(--line);min-height:4px}
+.col.hit i{background:var(--ok)}.col.today i{background:var(--ac)}
+.stages{display:flex;justify-content:space-between;margin-top:10px;font-size:12px;text-align:center;color:var(--mut)}
+.stages div{flex:1;opacity:.45}.stages div.u{opacity:1;color:var(--tx)}.stages span{display:block;font-size:22px}
+input[type=range]{width:100%;accent-color:var(--ac)}
+.mh{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;text-align:center}
+.mh.hd{font-size:11px;color:var(--mut);margin:12px 0 4px}
+.cd{aspect-ratio:1;border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:12px;background:var(--bg);color:var(--mut)}
+.cd.l1{background:color-mix(in srgb,var(--ac) 22%,var(--card));color:var(--tx)}
+.cd.l2{background:color-mix(in srgb,var(--ac) 45%,var(--card));color:var(--tx)}
+.cd.l3{background:var(--ac);color:#fff}
+.cd.l4{background:var(--ok);color:#fff;font-weight:700}
+.cd.td{outline:2px solid var(--ac);outline-offset:1px}
+.legend{display:flex;gap:6px;align-items:center;justify-content:flex-end;margin-top:10px;font-size:11px;color:var(--mut)}
+.legend i{width:12px;height:12px;border-radius:4px;display:inline-block}
+.ti{display:flex;align-items:center;gap:10px;padding:9px 4px;border-bottom:1px solid var(--line)}
+.ti input{width:20px;height:20px;accent-color:var(--ok);flex:none}
+.ti span{flex:1;word-break:break-word}
+.ti.dn span{text-decoration:line-through;color:var(--mut)}
+.ti button{border:0;background:none;color:var(--mut);font-size:15px;cursor:pointer;padding:4px 6px}
+.ti.sel{background:color-mix(in srgb,var(--ac) 14%,var(--card));border-radius:10px}
+.ti .pl{color:var(--ac)}
+.ti small{display:inline-block;margin-left:8px;color:var(--mut);font-size:12px}
+.cur{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--bg);border:1px solid var(--ac);border-radius:12px;padding:8px 12px;margin-bottom:12px;font-size:14px}
+.cur button{border:0;background:none;color:var(--mut);cursor:pointer;font-size:15px}
+.sb{display:flex;gap:10px;align-items:flex-start;padding:10px 2px;border-bottom:1px solid var(--line)}
+.se{font-size:18px}
+.tdadd{display:flex;gap:8px;margin-top:12px}
+.tdadd input{flex:1;min-width:0;border:1px solid var(--line);background:var(--bg);color:var(--tx);border-radius:12px;padding:11px 12px;font:inherit;font-size:15px}
+.tdadd button{border:0;background:var(--ac);color:#fff;border-radius:12px;padding:0 18px;font:inherit;font-weight:700;cursor:pointer}
+.tabs{display:flex;background:var(--bg);border-radius:12px;padding:3px;margin-bottom:12px}
+.tab{flex:1;border:0;background:none;color:var(--mut);font:inherit;font-weight:600;padding:8px;border-radius:10px;cursor:pointer}
+.tab.on{background:var(--card);color:var(--tx);box-shadow:0 1px 3px rgba(0,0,0,.15)}
+#splash{position:fixed;inset:0;z-index:99;background:#6c4cf5;color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;text-align:center;transition:opacity .5s}
+#splash.hide{opacity:0;pointer-events:none}
+#splash svg{width:132px;height:132px;margin-bottom:14px;animation:pop .7s ease-out}
+#splash b{font-size:28px;letter-spacing:.2px}
+#splash span{font-size:15px;opacity:.85}
+@keyframes pop{from{transform:scale(.6);opacity:0}to{transform:none;opacity:1}}
+.modal{position:fixed;inset:0;background:rgba(10,12,25,.6);display:none;align-items:center;justify-content:center;padding:20px;z-index:20}
+.modal.on{display:flex}
+.sheet{background:var(--card);border-radius:24px;padding:24px;width:100%;max-width:360px;text-align:center}
+.sheet .big{font-size:56px}.sheet h2{margin:6px 0}
+.xp{font-size:30px;font-weight:800;color:var(--warn);margin:8px 0 16px}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="card">
+    <div class="row"><h1>📚 স্টাডি টাইমার</h1><span class="pill" id="streak">🔥 ০</span></div>
+    <div class="row" style="margin-top:12px"><b id="lvl">লেভেল ১</b><span class="mut" id="xptxt">০ XP</span></div>
+    <div class="bar"><i id="xpbar"></i></div>
+  </div>
+
+  <div class="card">
+    <div class="chips" id="modes"></div>
+    <div class="ringwrap">
+      <svg class="ring" viewBox="0 0 200 200"><circle class="bg" cx="100" cy="100" r="90"/><circle class="fg" id="fg" cx="100" cy="100" r="90" stroke-dasharray="565.5" stroke-dashoffset="565.5"/></svg>
+      <div class="center"><div class="av" id="av">🌱</div><div class="time" id="time">০০:০০</div><div class="mut" id="stname">বীজ</div></div>
+    </div>
+    <div class="mut" style="text-align:center;margin-bottom:12px" id="today">আজ: ০ মিনিট</div>
+    <div class="cur" id="cur" style="display:none"></div>
+    <div class="btns"><button class="b" id="main">▶ শুরু</button><button class="b stop" id="stop" style="display:none">■ শেষ</button></div>
+  </div>
+
+  <div class="card">
+    <div class="row"><button class="chip" id="tdprev">‹</button><div style="text-align:center"><b id="tdname" style="cursor:pointer">আজ</b><div class="mut" id="tddate"></div></div><button class="chip" id="tdnext">›</button></div>
+    <div class="row" style="margin-top:10px"><b>📝 পড়ার তালিকা</b><span class="mut" id="tdcnt"></span></div>
+    <div id="tdlist"></div>
+    <button class="chip" id="tdcarry" style="display:none;margin-top:10px;width:100%">↪ গতকালের অসম্পন্নগুলো আজকে আনুন</button>
+    <div class="tdadd"><input id="tdin" placeholder="যেমন: পদার্থবিজ্ঞান অধ্যায় ৩" maxlength="120"><button id="tdadd">যোগ</button></div>
+  </div>
+
+  <div class="card">
+    <div class="tabs"><button class="tab on" id="ts">বিষয়</button><button class="tab" id="tw">সপ্তাহ</button><button class="tab" id="tm">মাস</button></div>
+    <div id="pw">
+    <div class="row"><b>এই সপ্তাহ</b><span class="mut" id="wk"></span></div>
+    <div class="week" id="week"></div>
+    </div>
+    <div id="pm" style="display:none">
+    <div class="row"><button class="chip" id="mprev">‹</button><b id="mname">মাস</b><button class="chip" id="mnext">›</button></div>
+    <div class="mh hd"><span>রবি</span><span>সোম</span><span>মঙ্গল</span><span>বুধ</span><span>বৃহ</span><span>শুক্র</span><span>শনি</span></div>
+    <div class="mh" id="mgrid"></div>
+    <div class="legend">কম <i style="background:var(--bg);border:1px solid var(--line)"></i><i style="background:color-mix(in srgb,var(--ac) 22%,var(--card))"></i><i style="background:color-mix(in srgb,var(--ac) 45%,var(--card))"></i><i style="background:var(--ac)"></i><i style="background:var(--ok)"></i> লক্ষ্য পূরণ</div>
+    <div class="grid" style="margin-top:14px"><div><b id="m1">০</b><span class="mut">এ মাসে মোট</span></div><div><b id="m2">০</b><span class="mut">পড়ার দিন</span></div><div><b id="m3">০</b><span class="mut">দিনে গড় (মি)</span></div></div>
+    </div>
+    <div id="ps" style="display:none"><div class="chips" style="margin:0 0 8px;justify-content:flex-start"><button class="chip on" data-f="all">সব</button><button class="chip" data-f="pend">⏳ বাকি</button><button class="chip" data-f="done">✅ সম্পন্ন</button></div><div id="slist"></div></div>
+  </div>
+
+  <div class="card">
+    <div class="grid">
+      <div><b id="s1">০</b><span class="mut">মোট ঘণ্টা</span></div>
+      <div><b id="s2">০</b><span class="mut">সেশন</span></div>
+      <div><b id="s3">০</b><span class="mut">সেরা দিন (মি)</span></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="row"><b>দৈনিক লক্ষ্য</b><span class="pill" id="tgtv">৪ ঘণ্টা</span></div>
+    <input type="range" id="tgt" min="1" max="12" step="0.5" value="4">
+    <div class="stages" id="stages"></div>
+    <div class="mut" style="margin-top:10px">যত বেশি পড়বেন, আপনার আইকন তত বড় হবে। লক্ষ্য পূরণ করলে বোনাস ২০ XP।</div>
+  </div>
+</div>
+
+<div id="splash"><svg viewBox="0 0 108 108"><path fill="#fff" d="M30,34 L52,38 L52,76 L30,72 Z"/><path fill="#E4DCFF" d="M78,34 L56,38 L56,76 L78,72 Z"/><path fill="#FFC233" d="M54,26 L58,36 L50,36 Z"/></svg><b>স্টাডি টাইমার</b><span>Made by সাইফুর রহমান</span></div>
+
+<div class="modal" id="cf"><div class="sheet"><h2>স্টাডি টাইমার</h2><div class="mut" id="cf_m" style="margin:8px 0 20px;font-size:15px"></div><div class="btns"><button class="b sec" id="cf_n">না</button><button class="b stop" id="cf_y">হ্যাঁ</button></div></div></div>
+
+<div class="modal" id="modal"><div class="sheet">
+  <div class="big" id="m_e">🌳</div><h2 id="m_t">সেশন শেষ!</h2>
+  <div class="mut" id="m_d"></div>
+  <div class="xp" id="m_xp">+০ XP</div>
+  <button class="b" id="claim">XP নিন</button>
+</div></div>
+
+<script>
+const $=id=>document.getElementById(id);
+const bn=n=>String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
+const STAGES=[{m:0,e:'🌱',n:'বীজ'},{m:15,e:'🌿',n:'চারা'},{m:45,e:'🪴',n:'গাছ'},{m:90,e:'🌳',n:'বড় গাছ'},{m:180,e:'🌲',n:'বন'},{m:300,e:'🏞️',n:'জঙ্গল'}];
+const MODES=[{k:'free',t:'⏱ স্টপওয়াচ',g:0},{k:'f25',t:'২৫ মি',g:1500},{k:'f45',t:'৪৫ মি',g:2700},{k:'f60',t:'৬০ মি',g:3600}];
+const KEY='studytimer_v1';
+let S={days:{},xp:0,sessions:0,target:4,mode:'free',run:null,pending:null,todos:{},cur:null};
+try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
+const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
+const dk=d=>{d=d||new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
+const el=()=>!S.run?0:Math.floor((S.run.acc+(S.run.paused?0:Date.now()-S.run.start))/1000);
+const mode=()=>MODES.find(m=>m.k===S.mode)||MODES[0];
+const hm=s=>{const m=Math.floor(s/60);return m>=60?bn(Math.floor(m/60))+' ঘ '+bn(m%60)+' মি':bn(m)+' মিনিট'};
+const clock=s=>bn(String(Math.floor(s/60)).padStart(2,'0'))+':'+bn(String(s%60).padStart(2,'0'));
+
+function beep(){if(window.Native)return;try{const c=new (window.AudioContext||window.webkitAudioContext)();[0,.35,.7].forEach(t=>{const o=c.createOscillator(),g=c.createGain();o.frequency.value=880;o.connect(g);g.connect(c.destination);g.gain.setValueAtTime(.2,c.currentTime+t);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+t+.3);o.start(c.currentTime+t);o.stop(c.currentTime+t+.3)})}catch(e){}}
+if(navigator.vibrate){}
+
+function streak(){let n=0,d=new Date();if((S.days[dk(d)]||0)<900)d.setDate(d.getDate()-1);while((S.days[dk(d)]||0)>=900){n++;d.setDate(d.getDate()-1)}return n}
+function lvl(){const l=1+Math.floor(Math.sqrt(S.xp/30));return{l,a:30*(l-1)**2,b:30*l**2}}
+
+let lk=null,le=0;
+function sync(){
+  if(!window.Native)return;
+  try{
+    const run=!!(S.run&&!S.run.paused);
+    if(run!==lk){lk=run;Native.keepOn(run)}
+    const g=mode().g,end=run&&g?S.run.start+g*1000-S.run.acc:0;
+    if(end){if(Math.abs(end-le)>1500){le=end;Native.schedule(end)}}
+    else if(le){if(Date.now()<le-1500)Native.cancel();le=0}
+  }catch(e){}
+}
+function render(){sync();
+  const e=el(),m=mode(),todaySec=(S.days[dk()]||0)+e,tgtSec=S.target*3600;
+  const tm=Math.floor(todaySec/60);let st=STAGES[0];STAGES.forEach(x=>{if(tm>=x.m)st=x});
+  $('av').textContent=st.e;$('stname').textContent=st.n;$('av').className='av'+(S.run&&!S.run.paused?' run':'');
+  $('time').textContent=clock(m.g&&S.run?Math.max(0,m.g-e):(m.g&&!S.run?m.g:e));
+  $('fg').style.strokeDashoffset=565.5*(1-Math.min(1,todaySec/tgtSec));
+  $('today').textContent='আজ: '+hm(todaySec)+' / '+bn(S.target)+' ঘণ্টা';
+  $('main').textContent=!S.run?'▶ শুরু':S.run.paused?'▶ চালু করুন':'⏸ বিরতি';
+  $('stop').style.display=S.run?'block':'none';
+  $('modes').innerHTML=MODES.map(x=>`<button class="chip${x.k===S.mode?' on':''}" data-k="${x.k}" ${S.run?'disabled':''}>${x.t}</button>`).join('');
+  const L=lvl();$('lvl').textContent='লেভেল '+bn(L.l);$('xptxt').textContent=bn(S.xp)+' / '+bn(L.b)+' XP';
+  $('xpbar').style.width=((S.xp-L.a)/(L.b-L.a)*100)+'%';
+  $('streak').textContent='🔥 '+bn(streak())+' দিন';
+  $('stages').innerHTML=STAGES.map(x=>`<div class="${tm>=x.m?'u':''}"><span>${x.e}</span>${bn(x.m)}মি</div>`).join('');
+}
+function stats(){
+  const keys=Object.keys(S.days),tot=keys.reduce((a,k)=>a+S.days[k],0),best=Math.max(0,...keys.map(k=>S.days[k]));
+  $('s1').textContent=bn((tot/3600).toFixed(1));$('s2').textContent=bn(S.sessions);$('s3').textContent=bn(Math.floor(best/60));
+  const names=['রবি','সোম','মঙ্গল','বুধ','বৃহ','শুক্র','শনি'];let h='',sum=0;const mx=Math.max(S.target*3600,...[...Array(7)].map((_,i)=>{const d=new Date();d.setDate(d.getDate()-6+i);return S.days[dk(d)]||0}));
+  for(let i=0;i<7;i++){const d=new Date();d.setDate(d.getDate()-6+i);const v=S.days[dk(d)]||0;sum+=v;
+    h+=`<div class="col ${v>=S.target*3600?'hit':''} ${i===6?'today':''}"><i style="height:${Math.max(4,v/mx*80)}px"></i>${names[d.getDay()]}</div>`}
+  $('week').innerHTML=h;$('wk').textContent='মোট '+hm(sum);month();
+}
+
+function finish(auto){
+  if(!S.run)return;if(el()>=60||auto)flush();const e=el(),k=dk(),before=S.days[k]||0;
+  S.run=null;if(e>=60||auto){S.days[k]=before+e;S.sessions++;
+    const bonus=before<S.target*3600&&before+e>=S.target*3600?20:0;
+    S.pending={sec:e,xp:Math.floor(e/60)+bonus,bonus};showSummary()}
+  save();render();stats();
+}
+function showSummary(){
+  const p=S.pending;if(!p)return;
+  const tm=Math.floor((S.days[dk()]||0)/60);let st=STAGES[0];STAGES.forEach(x=>{if(tm>=x.m)st=x});
+  $('m_e').textContent=st.e;$('m_d').textContent='পড়েছেন '+hm(p.sec)+(p.bonus?' · লক্ষ্য পূরণ 🎉':'');
+  $('m_xp').textContent='+'+bn(p.xp)+' XP';$('modal').classList.add('on');
+}
+$('claim').onclick=()=>{if(window.Native)try{Native.stop()}catch(e){}if(S.pending){S.xp+=S.pending.xp;S.pending=null}save();$('modal').classList.remove('on');render()};
+$('main').onclick=()=>{
+  if(!S.run)S.run={start:Date.now(),acc:0,paused:false};
+  else if(S.run.paused){S.run.start=Date.now();S.run.paused=false}
+  else{S.run.acc+=Date.now()-S.run.start;S.run.paused=true}
+  save();render()};
+function ask(msg,cb){$('cf_m').textContent=msg;$('cf').classList.add('on');$('cf_y').onclick=()=>{$('cf').classList.remove('on');cb()};$('cf_n').onclick=()=>$('cf').classList.remove('on')}
+$('stop').onclick=()=>{if(S.run&&el()<60)ask('এক মিনিটের কম হলে সেশন গণনা হবে না। বাদ দেবেন?',()=>finish(false));else finish(false)};
+$('modes').onclick=e=>{const k=e.target.dataset&&e.target.dataset.k;if(k&&!S.run){S.mode=k;save();render()}};
+$('tgt').value=S.target;$('tgt').oninput=e=>{S.target=+e.target.value;$('tgtv').textContent=bn(S.target)+' ঘণ্টা';save();render();stats()};
+$('tgtv').textContent=bn(S.target)+' ঘণ্টা';
+
+let mo=0;
+const MN=['জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];
+function month(){
+  const n=new Date(),d=new Date(n.getFullYear(),n.getMonth()+mo,1),y=d.getFullYear(),m=d.getMonth(),dim=new Date(y,m+1,0).getDate();
+  let h='',tot=0,days=0;for(let i=0;i<d.getDay();i++)h+='<div></div>';
+  for(let i=1;i<=dim;i++){const v=S.days[dk(new Date(y,m,i))]||0;tot+=v;if(v>=60)days++;
+    const r=v/(S.target*3600),lv=v<60?0:r>=1?4:r>=.66?3:r>=.33?2:1;
+    h+='<div class="cd l'+lv+(mo===0&&i===n.getDate()?' td':'')+'" title="'+hm(v)+'">'+bn(i)+'</div>'}
+  $('mgrid').innerHTML=h;$('mname').textContent=MN[m]+' '+bn(y);$('mnext').disabled=mo>=0;
+  $('m1').textContent=bn((tot/3600).toFixed(1))+' ঘ';$('m2').textContent=bn(days);$('m3').textContent=bn(days?Math.round(tot/days/60):0);
+}
+const rid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
+function findCur(){return S.cur?(S.todos[S.cur.k]||[]).find(x=>x.id===S.cur.id)||null:null}
+function flush(){if(!S.run)return;const e=el(),dl=e-(S.run.mark||0),c=findCur();if(c&&dl>0)c.sec=(c.sec||0)+dl;S.run.mark=e}
+function pick(x,k){flush();if(S.cur&&x.id&&S.cur.id===x.id)S.cur=null;else{if(!x.id)x.id=rid();S.cur={k,id:x.id}}curUI()}
+function curUI(){const c=findCur(),b=$('cur');if(!c){b.style.display='none';return}b.style.display='flex';b.innerHTML='<span>📖 '+esc(c.t)+'</span><button id="curx">✕</button>';$('curx').onclick=()=>{flush();S.cur=null;save();curUI();todo()}}
+let sf='all';
+function subj(){
+  const m={};
+  Object.keys(S.todos).forEach(k=>S.todos[k].forEach(x=>{const n=x.t.trim().toLowerCase(),o=m[n]=m[n]||{t:x.t,sec:0,done:false};o.sec+=x.sec||0;if(x.d)o.done=true}));
+  let L=Object.values(m);
+  if(sf==='pend')L=L.filter(o=>!o.done);if(sf==='done')L=L.filter(o=>o.done);
+  L.sort((a,b)=>(a.done-b.done)||b.sec-a.sec);
+  $('slist').innerHTML=L.map(o=>'<div class="sb"><span class="se">'+(o.done?'✅':'⏳')+'</span><div style="flex:1"><div>'+esc(o.t)+'</div><div class="mut">'+(o.sec?'⏱ '+hm(o.sec):'এখনো সময় দেওয়া হয়নি')+' · '+(o.done?'সম্পন্ন':'বাকি')+'</div></div></div>').join('')||'<div class="mut" style="text-align:center;padding:14px">কোনো বিষয় নেই</div>';
+}
+let td=0;
+const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const tdDate=o=>{const d=new Date();d.setDate(d.getDate()+o);return d};
+function todo(){
+  const d=tdDate(td),k=dk(d),L=S.todos[k]||[],ds=bn(d.getDate())+' '+MN[d.getMonth()];
+  $('tdname').textContent=td===0?'আজ':td===-1?'গতকাল':td===1?'আগামীকাল':ds;
+  $('tddate').textContent=Math.abs(td)<=1?ds:'';
+  $('tdlist').innerHTML=L.map((x,i)=>'<div class="ti'+(x.d?' dn':'')+(S.cur&&x.id&&S.cur.id===x.id?' sel':'')+'"><input type="checkbox" data-i="'+i+'" '+(x.d?'checked':'')+'><span>'+esc(x.t)+(x.sec?'<small>⏱ '+hm(x.sec)+'</small>':'')+'</span><button class="pl" data-p="'+i+'">▶</button><button data-x="'+i+'">✕</button></div>').join('')||'<div class="mut" style="text-align:center;padding:12px">এই দিনের জন্য কিছু যোগ করা হয়নি</div>';
+  const dn=L.filter(x=>x.d).length;$('tdcnt').textContent=L.length?bn(dn)+'/'+bn(L.length)+' সম্পন্ন':'';
+  const y=S.todos[dk(tdDate(-1))]||[];$('tdcarry').style.display=td===0&&y.some(x=>!x.d&&!x.c)?'block':'none';
+}
+function addTodo(){const v=$('tdin').value.trim();if(!v)return;const k=dk(tdDate(td));(S.todos[k]=S.todos[k]||[]).push({t:v,d:false});$('tdin').value='';save();todo()}
+$('tdadd').onclick=addTodo;$('tdin').onkeydown=e=>{if(e.key==='Enter')addTodo()};
+$('tdprev').onclick=()=>{td--;todo()};$('tdnext').onclick=()=>{td++;todo()};$('tdname').onclick=()=>{td=0;todo()};
+$('tdcarry').onclick=()=>{const yk=dk(tdDate(-1)),tk=dk(tdDate(0));(S.todos[yk]||[]).forEach(x=>{if(!x.d&&!x.c){x.c=true;(S.todos[tk]=S.todos[tk]||[]).push({t:x.t,d:false})}});save();todo()};
+$('tdlist').onclick=e=>{const k=dk(tdDate(td)),L=S.todos[k]||[],t=e.target;
+  if(t.dataset.p!==undefined)pick(L[+t.dataset.p],k);
+  else if(t.dataset.i!==undefined)L[+t.dataset.i].d=t.checked;
+  else if(t.dataset.x!==undefined){L.splice(+t.dataset.x,1);if(!L.length)delete S.todos[k]}
+  else return;save();todo()};
+function tab(t){['pw','pm','ps'].forEach((p,i)=>$(p).style.display=i===t?'block':'none');['tw','tm','ts'].forEach((p,i)=>$(p).classList.toggle('on',i===t));if(t===2)subj()}
+$('tw').onclick=()=>tab(0);$('tm').onclick=()=>tab(1);$('ts').onclick=()=>tab(2);
+$('ps').onclick=e=>{const f=e.target.dataset&&e.target.dataset.f;if(f){sf=f;document.querySelectorAll('#ps .chip').forEach(c=>c.classList.toggle('on',c.dataset.f===f));subj()}};
+$('mprev').onclick=()=>{mo--;month()};$('mnext').onclick=()=>{if(mo<0){mo++;month()}};
+setInterval(()=>{if(S.run&&!S.run.paused){const g=mode().g;if(g&&el()>=g){beep();finish(true);return}render()}},500);
+document.addEventListener('visibilitychange',()=>{if(!document.hidden)render()});
+render();stats();todo();curUI();tab(2);if(S.pending)showSummary();
+setTimeout(()=>{const s=$('splash');if(s){s.classList.add('hide');setTimeout(()=>s.remove(),600)}},1800);
+</script>
+</body>
+</html>

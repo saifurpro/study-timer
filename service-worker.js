@@ -1,4 +1,4 @@
-const CACHE = 'study-timer-v7';
+const CACHE = 'study-timer-v8';
 const APP_SHELL = new URL('./', self.location).href;
 const ASSETS = [
   APP_SHELL,

@@ -131,27 +131,17 @@ button:disabled{opacity:.4}
 .cd.sel{outline:2px solid var(--tx);outline-offset:2px;background:var(--tx)!important;color:var(--bg)!important;font-weight:700}
 .legend{display:flex;align-items:center;justify-content:flex-end;gap:5px;margin-top:12px;color:var(--mut);font-size:10px}
 .legend i{width:12px;height:12px;border-radius:4px;display:inline-block}
-.month-chart-card{margin-top:12px}
-.month-chart{overflow-x:auto;padding:15px 2px 6px;scrollbar-width:thin;scrollbar-color:var(--line) transparent}
-.month-chart-bars{display:grid;grid-template-columns:repeat(var(--days),48px);gap:6px;min-width:max-content;align-items:end}
-.month-bar{width:48px;min-width:0;color:var(--mut);font:inherit;text-align:center}
-.month-bar-value{display:block;height:18px;overflow:visible;font-size:10px;font-weight:700;line-height:18px;white-space:nowrap}
-.month-bar-track{display:flex;height:76px;align-items:flex-end;overflow:hidden;border-radius:8px;background:var(--bg)}
-.month-bar-track i{display:block;width:100%;min-height:0;border-radius:7px 7px 3px 3px;background:linear-gradient(180deg,#a99aff,#6c4cf5);transition:height .25s}
-.month-bar.goal .month-bar-track i{background:linear-gradient(180deg,#53dbab,#12a979)}
-.month-bar.today .month-bar-track{box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ac) 42%,transparent)}
-.month-bar.today .month-bar-day{color:var(--ac);font-weight:700}
-.month-bar-day{display:block;margin-top:5px;font-size:10px}
-.month-chart-legend{display:flex;justify-content:flex-end;gap:12px;margin:4px 2px 0;color:var(--mut);font-size:10px}
-.month-chart-legend span{display:inline-flex;align-items:center;gap:4px}
-.month-chart-legend i{width:9px;height:9px;border-radius:3px;background:linear-gradient(180deg,#a99aff,#6c4cf5)}
-.month-chart-legend .goal{background:linear-gradient(180deg,#53dbab,#12a979)}
-.month-chart::-webkit-scrollbar{height:5px}
-.month-chart::-webkit-scrollbar-thumb{border-radius:99px;background:var(--line)}
-.month-summary{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:12px}
-.month-stat{min-width:0;padding:12px 8px;border:1px solid var(--line);border-radius:15px;background:var(--bg);text-align:center}
-.month-stat b{display:block;overflow:hidden;font-size:15px;text-overflow:ellipsis;white-space:nowrap}
-.month-stat span{display:block;margin-top:3px;color:var(--mut);font-size:11px}
+.month-summary{margin-top:14px;padding:14px;border:1px solid color-mix(in srgb,var(--ac) 12%,var(--line));border-radius:20px;background:linear-gradient(135deg,color-mix(in srgb,var(--ac) 5%,var(--card)),var(--card) 62%,color-mix(in srgb,var(--ok) 4%,var(--card)))}
+.month-summary-title{margin:0 0 11px;font-size:13px;font-weight:700}
+.month-summary-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.month-stat{display:flex;min-width:0;align-items:center;gap:8px;padding:10px 8px;border:1px solid var(--line);border-radius:15px;background:var(--card);box-shadow:0 3px 10px rgba(38,35,78,.04)}
+.month-stat-icon{display:grid;width:30px;height:30px;flex:none;place-items:center;border-radius:10px;background:color-mix(in srgb,var(--ac) 11%,var(--card));font-size:15px}
+.month-stat:nth-child(2) .month-stat-icon{background:color-mix(in srgb,#12a979 12%,var(--card))}
+.month-stat:nth-child(3) .month-stat-icon{background:color-mix(in srgb,#f59f00 14%,var(--card))}
+.month-stat-copy{min-width:0}
+.month-stat b{display:block;overflow:hidden;font-size:14px;line-height:1.3;text-overflow:ellipsis;white-space:nowrap}
+.month-stat span{display:block;margin-top:2px;color:var(--mut);font-size:10px;line-height:1.3}
+@media(max-width:380px){.month-summary-grid{grid-template-columns:1fr}.month-stat{padding:9px 11px}}
 .day-detail{margin-top:12px}
 .day-detail-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .day-detail-date{font-size:15px;font-weight:700}
@@ -291,7 +281,6 @@ input[type=range]{width:100%;accent-color:var(--ac)}
       <svg class="ring" viewBox="0 0 200 200"><circle class="bg" cx="100" cy="100" r="90"/><circle class="fg" id="fg" cx="100" cy="100" r="90" stroke-dasharray="565.5" stroke-dashoffset="565.5"/></svg>
       <div class="center"><div class="av" id="av">🌱</div><div class="time" id="time">০০:০০</div><div class="mut" id="stname">চারা গাছ</div></div>
     </div>
-    <div class="mut" style="text-align:center;margin-bottom:12px" id="today">আজ: ০ মিনিট</div>
     <div class="subject-picker">
       <select id="tsel" class="subject-picker-native" tabindex="-1" aria-hidden="true"></select>
       <button type="button" class="subject-picker-trigger" id="subjectPickerToggle" aria-haspopup="listbox" aria-expanded="false" aria-controls="subjectPickerMenu">
@@ -335,18 +324,15 @@ input[type=range]{width:100%;accent-color:var(--ac)}
       <div class="mh" id="mgrid"></div>
       <div class="legend">কম <i style="background:var(--bg);border:1px solid var(--line)"></i><i style="background:color-mix(in srgb,#8e7bfa 16%,var(--card))"></i><i style="background:color-mix(in srgb,#8e7bfa 34%,var(--card))"></i><i style="background:color-mix(in srgb,#7559ea 76%,var(--card))"></i><i style="background:#12a979"></i> লক্ষ্য পূরণ</div>
     </div>
-    <div class="stats-card month-chart-card">
-      <div class="stats-card-head"><div class="stats-card-title">সারা মাসের পড়াশোনা</div></div>
-      <div class="stats-card-note">প্রতিদিনের পড়ার সময় বারগুলোর ওপরে দেখা যাচ্ছে</div>
-      <div class="month-chart" id="monthChartScroll"><div class="month-chart-bars" id="monthChart" role="list" aria-label="মাসের প্রতিদিনের পড়ার সময়"></div></div>
-      <div class="month-chart-legend"><span><i></i> পড়ার সময়</span><span><i class="goal"></i> লক্ষ্য পূরণ</span></div>
-    </div>
     <div id="md" aria-live="polite"></div>
-    <div class="month-summary">
-      <div class="month-stat"><b id="m1">০ মিনিট</b><span>মোট পড়া</span></div>
-      <div class="month-stat"><b id="m2">০</b><span>পড়ার দিন</span></div>
-      <div class="month-stat"><b id="m3">০</b><span>লক্ষ্য পূরণ</span></div>
-    </div>
+    <section class="month-summary" aria-labelledby="monthSummaryTitle">
+      <h3 class="month-summary-title" id="monthSummaryTitle">এই মাসের সারাংশ</h3>
+      <div class="month-summary-grid">
+        <div class="month-stat"><span class="month-stat-icon" aria-hidden="true">📚</span><span class="month-stat-copy"><b id="m1">০ মিনিট</b><span>মোট পড়া</span></span></div>
+        <div class="month-stat"><span class="month-stat-icon" aria-hidden="true">📅</span><span class="month-stat-copy"><b id="m2">০</b><span>পড়ার দিন</span></span></div>
+        <div class="month-stat"><span class="month-stat-icon" aria-hidden="true">🎯</span><span class="month-stat-copy"><b id="m3">০</b><span>লক্ষ্য পূরণ</span></span></div>
+      </div>
+    </section>
   </div>
   <div id="ps" class="stats-panel">
     <div class="subject-overview">
@@ -479,24 +465,63 @@ if(navigator.vibrate){}
 let installPrompt=null;
 const installHelp=$('installHelp');
 const installMedia=window.matchMedia('(max-width: 768px)');
-let installPromptDismissed=false;
-const isInstalled=()=>window.matchMedia('(display-mode: standalone)').matches||navigator.standalone===true;
+const INSTALL_DISMISSED_UNTIL='studyTimerInstallDismissedUntil';
+const INSTALL_MARKER='studyTimerInstalled';
+const installModes=['standalone','minimal-ui','fullscreen','window-controls-overlay'].map(mode=>window.matchMedia('(display-mode: '+mode+')'));
+let installCheckComplete=false,installedRelatedApp=false,installCooldownTimer=null;
+const isInstalled=()=>installModes.some(mode=>mode.matches)||navigator.standalone===true;
+function readInstallValue(key){
+  try{return localStorage.getItem(key)}
+  catch(error){console.error('Could not read install preference:',error);return null}
+}
+function writeInstallValue(key,value){
+  try{if(value===null)localStorage.removeItem(key);else localStorage.setItem(key,value)}
+  catch(error){console.error('Could not save install preference:',error)}
+}
 function updateInstallPrompt(){
+  clearTimeout(installCooldownTimer);installCooldownTimer=null;
   if(isInstalled()){
+    installedRelatedApp=true;
+    writeInstallValue(INSTALL_MARKER,'true');
+  }
+  if(isInstalled()||installedRelatedApp||!installCheckComplete||!installMedia.matches){
+    installHelp.classList.remove('on');return;
+  }
+  const dismissedUntil=Number(readInstallValue(INSTALL_DISMISSED_UNTIL))||0,remaining=dismissedUntil-Date.now();
+  if(remaining>0){
     installHelp.classList.remove('on');
+    installCooldownTimer=setTimeout(updateInstallPrompt,remaining);
     return;
   }
-  if(installMedia.matches&&!installPromptDismissed)installHelp.classList.add('on');
-  else installHelp.classList.remove('on');
+  installHelp.classList.add('on');
 }
-window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e});
-window.addEventListener('appinstalled',()=>{installPrompt=null;updateInstallPrompt()});
+async function checkInstalledApp(){
+  if(isInstalled()){
+    installedRelatedApp=true;installCheckComplete=true;writeInstallValue(INSTALL_MARKER,'true');updateInstallPrompt();return;
+  }
+  if(typeof navigator.getInstalledRelatedApps==='function'){
+    try{
+      const apps=await navigator.getInstalledRelatedApps();
+      installedRelatedApp=apps.some(app=>app.platform==='webapp');
+      writeInstallValue(INSTALL_MARKER,installedRelatedApp?'true':null);
+    }catch(error){
+      console.error('Could not detect installed Study Timer app:',error);
+      installedRelatedApp=readInstallValue(INSTALL_MARKER)==='true';
+    }
+  }else installedRelatedApp=readInstallValue(INSTALL_MARKER)==='true';
+  installCheckComplete=true;updateInstallPrompt();
+}
+window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();installPrompt=e;updateInstallPrompt()});
+window.addEventListener('appinstalled',()=>{installPrompt=null;installedRelatedApp=true;installCheckComplete=true;writeInstallValue(INSTALL_MARKER,'true');updateInstallPrompt()});
 $('installAction').onclick=async()=>{
   if(installPrompt){
     const prompt=installPrompt;installPrompt=null;
     await prompt.prompt();
     const choice=await prompt.userChoice;
-    if(choice.outcome==='accepted')updateInstallPrompt();
+    if(choice.outcome==='accepted'){
+      installedRelatedApp=true;installCheckComplete=true;
+      writeInstallValue(INSTALL_MARKER,'true');updateInstallPrompt();
+    }
     return;
   }
   const ios=/iphone|ipad|ipod/i.test(navigator.userAgent)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
@@ -507,11 +532,12 @@ $('installAction').onclick=async()=>{
   $('installInstructions').hidden=false;
 };
 $('installClose').onclick=()=>{
-  installPromptDismissed=true;
-  installHelp.classList.remove('on');
+  writeInstallValue(INSTALL_DISMISSED_UNTIL,String(Date.now()+24*60*60*1000));
+  updateInstallPrompt();
 };
-installMedia.addEventListener('change',updateInstallPrompt);
-updateInstallPrompt();
+installMedia.addEventListener('change',()=>{if(installMedia.matches)checkInstalledApp();else updateInstallPrompt()});
+installModes.forEach(mode=>mode.addEventListener('change',updateInstallPrompt));
+checkInstalledApp();
 if('serviceWorker' in navigator)window.addEventListener('load',()=>{
   navigator.serviceWorker.register('./service-worker.js').catch(error=>console.error('Service worker registration failed:',error));
 });
@@ -548,7 +574,7 @@ function render(){sync();
   if(av_n!==sn){av_n=sn;$('av').innerHTML=treeSVG(sn)}$('stname').textContent=TS[sn-1].n+(pr>=1?' ✅':'');$('av').className='av'+(S.run&&!S.run.paused?' run':'');
   $('time').textContent=clock(m.g&&S.run?Math.max(0,m.g-e):(m.g&&!S.run?m.g:e));
   $('fg').style.strokeDashoffset=565.5*(1-Math.min(1,todaySec/tgtSec));
-  $('tgtv').textContent=hm(tgtSec);$('tgt').setAttribute('aria-valuetext',hm(tgtSec));$('tgt').style.setProperty('--range-progress',((S.target-1)/11*100)+'%');$('today').textContent='আজ: '+hm(todaySec)+' / '+hm(tgtSec);
+  $('tgtv').textContent=hm(tgtSec);$('tgt').setAttribute('aria-valuetext',hm(tgtSec));$('tgt').style.setProperty('--range-progress',((S.target-1)/11*100)+'%');
   $('main').textContent=!S.run?'▶ শুরু':S.run.paused?'▶ চালু করুন':'⏸ বিরতি';
   $('stop').style.display=S.run?'block':'none';
   $('modes').innerHTML=MODES.map(x=>`<button class="chip${x.k===S.mode?' on':''}" data-k="${x.k}" ${S.run?'disabled':''}>${x.t}</button>`).join('');
@@ -672,19 +698,12 @@ function dayDetail(k){
 function month(){
   const n=new Date(),d=new Date(n.getFullYear(),n.getMonth()+mo,1),y=d.getFullYear(),m=d.getMonth(),dim=new Date(y,m+1,0).getDate();
   const ym=y+'-'+String(m+1).padStart(2,'0');if(!selM||selM.slice(0,7)!==ym)selM=mo===0?dk():ym+'-01';
-  let h='',tot=0,days=0,goals=0;const daily=[];for(let i=0;i<d.getDay();i++)h+='<span aria-hidden="true"></span>';
+  let h='',tot=0,days=0,goals=0;for(let i=0;i<d.getDay();i++)h+='<span aria-hidden="true"></span>';
   for(let i=1;i<=dim;i++){
     const key=dk(new Date(y,m,i)),v=(S.days[key]||0)+(key===dk()?el():0);tot+=v;if(v>=60)days++;if(v>=S.target*3600)goals++;
-    daily.push({key,day:i,sec:v});
     const r=v/(S.target*3600),lv=v<60?0:r>=1?4:r>=.66?3:r>=.33?2:1;
     h+='<button type="button" class="cd l'+lv+(mo===0&&i===n.getDate()?' td':'')+(key===selM?' sel':'')+'" data-k="'+key+'" aria-pressed="'+(key===selM)+'" aria-label="'+bn(i)+' তারিখ, '+esc(hm(v))+'" title="'+hm(v)+'">'+bn(i)+'</button>';
   }
-  const max=Math.max(1,...daily.map(x=>x.sec));
-  $('monthChart').style.setProperty('--days',dim);
-  $('monthChart').innerHTML=daily.map(x=>{
-    const height=x.sec?Math.max(5,Math.round(x.sec/max*100)):0,minutes=Math.floor(x.sec/60),label=bn(String(Math.floor(minutes/60)).padStart(2,'0'))+':'+bn(String(minutes%60).padStart(2,'0')),today=x.key===dk(),goal=x.sec>=S.target*3600;
-    return '<div class="month-bar'+(goal?' goal':'')+(today?' today':'')+'" role="listitem" aria-label="'+bn(x.day)+' তারিখ, '+esc(hm(x.sec))+(goal?' · দৈনিক লক্ষ্য পূরণ':'')+'" title="'+esc(hm(x.sec))+'"><span class="month-bar-value">'+label+'</span><span class="month-bar-track"><i style="height:'+height+'%"></i></span><span class="month-bar-day">'+bn(x.day)+'</span></div>';
-  }).join('');
   $('mgrid').innerHTML=h;$('md').innerHTML=dayDetail(selM);$('mname').textContent=MN[m]+' '+bn(y);$('mnext').disabled=mo>=0;
   $('m1').textContent=hm(tot);$('m2').textContent=bn(days);$('m3').textContent=bn(goals);
 }
@@ -813,7 +832,7 @@ $('week').onclick=e=>{const c=e.target.closest('.col');if(c&&c.dataset.k){selW=c
 $('mgrid').onclick=e=>{const c=e.target.closest('.cd');if(c&&c.dataset.k){selM=c.dataset.k;month()}};
 $('mnext').onclick=()=>{if(mo<0){mo++;month()}};
 setInterval(()=>{if(S.run&&!S.run.paused){const g=mode().g;if(g&&el()>=g){beep();finish(true);return}render()}},500);
-document.addEventListener('visibilitychange',()=>{if(!document.hidden)render()});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){render();checkInstalledApp()}});
 render();stats();curUI();subOpts();tab(2);renderNotes();showMotivation();if(S.pending)showSummary();
 setTimeout(()=>{const s=$('splash');if(s){s.classList.add('hide');setTimeout(()=>s.remove(),600)}},1800);
 </script>

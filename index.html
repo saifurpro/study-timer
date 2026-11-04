@@ -12,7 +12,12 @@ box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:en
 html{scroll-padding-top:env(safe-area-inset-top,0px)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 body{margin:0;background:var(--bg);color:var(--tx);font-family:"Hind Siliguri","Noto Sans Bengali",system-ui,sans-serif;display:flex;justify-content:center}
-.app{width:100%;max-width:440px;padding:16px 16px 40px}
+.app{width:100%;max-width:440px;padding:16px 16px 110px}
+#nav{position:fixed;left:0;right:0;bottom:0;z-index:15;display:flex;justify-content:center;background:var(--card);border-top:1px solid var(--line);padding-bottom:env(safe-area-inset-bottom,0px)}
+#nav .in{display:flex;width:100%;max-width:440px}
+#nav button{flex:1;border:0;background:none;color:var(--mut);font:inherit;font-size:12px;padding:9px 0 10px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer}
+#nav button svg{width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#nav button.on{color:var(--ac);font-weight:700}
 .card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:16px;margin-bottom:12px}
 .row{display:flex;align-items:center;justify-content:space-between;gap:10px}
 h1{font-size:20px;margin:0}
@@ -36,8 +41,8 @@ button.b{flex:1;border:0;border-radius:16px;padding:15px;font:inherit;font-size:
 button.b.sec{background:var(--bg);color:var(--tx);border:1px solid var(--line)}
 button.b.stop{background:#e8590c}
 button:disabled{opacity:.4}
-.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;text-align:center}
-.grid b{display:block;font-size:20px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;text-align:center}
+.grid b{display:block;font-size:17px;line-height:1.35}
 .week{display:flex;align-items:flex-end;justify-content:space-between;height:110px;gap:6px;margin-top:10px}
 .col{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;font-size:11px;color:var(--mut)}
 .col i{width:100%;max-width:26px;border-radius:7px 7px 3px 3px;background:var(--line);min-height:4px}
@@ -55,21 +60,36 @@ input[type=range]{width:100%;accent-color:var(--ac)}
 .cd.td{outline:2px solid var(--ac);outline-offset:1px}
 .legend{display:flex;gap:6px;align-items:center;justify-content:flex-end;margin-top:10px;font-size:11px;color:var(--mut)}
 .legend i{width:12px;height:12px;border-radius:4px;display:inline-block}
-.ti{display:flex;align-items:center;gap:10px;padding:9px 4px;border-bottom:1px solid var(--line)}
-.ti input{width:20px;height:20px;accent-color:var(--ok);flex:none}
-.ti span{flex:1;word-break:break-word}
-.ti.dn span{text-decoration:line-through;color:var(--mut)}
-.ti button{border:0;background:none;color:var(--mut);font-size:15px;cursor:pointer;padding:4px 6px}
-.ti.sel{background:color-mix(in srgb,var(--ac) 14%,var(--card));border-radius:10px}
-.ti .pl{color:var(--ac)}
-.ti small{display:inline-block;margin-left:8px;color:var(--mut);font-size:12px}
+
+.av svg{width:74px;height:74px;display:block}
+.stages span svg{width:100%;max-width:30px;height:auto;display:block;margin:0 auto}
+.sheet .big svg{width:100px;height:100px;display:block;margin:0 auto}
+#tlist svg,#splashx svg{display:block}
+.col{cursor:pointer}
+.col i{margin-bottom:6px}
+.col.sel i{outline:2px solid var(--ac);outline-offset:1px}
+.col.sel{color:var(--tx);font-weight:700}
+.cd{cursor:pointer}
+.cd.sel{background:var(--tx)!important;color:var(--bg)!important;font-weight:700;box-shadow:0 0 0 3px color-mix(in srgb,var(--tx) 22%,transparent)}
+.dd{margin-top:14px;padding-top:12px;border-top:1px solid var(--line)}
+.ddh{font-size:13px;color:var(--mut);margin:14px 0 6px}
+.dr{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--line)}
+.dr b{white-space:nowrap}
+.nc{display:inline-block;margin:0 6px 6px 0;padding:5px 11px;border-radius:99px;background:var(--bg);border:1px solid var(--line);font-size:13px}
+.nc.pl{border-color:var(--warn)}
+.tsel{width:100%;border:1px solid var(--line);background:var(--bg);color:var(--tx);border-radius:14px;padding:13px 14px;font:inherit;font-size:16px;margin-bottom:12px}
+#tcu,#tpc{margin:0 0 12px}
+.msum{margin-top:24px;padding:14px 12px 12px;background:var(--bg);border:1px solid var(--line);border-radius:16px}
+.msh{font-size:13px;color:var(--mut);margin-bottom:10px;text-align:left}
+.dg{border-bottom:1px solid var(--line);padding-bottom:5px}
+.dg .dr{border-bottom:0;padding-bottom:4px}
+.tp{display:flex;justify-content:space-between;gap:10px;padding:2px 0 3px 14px;font-size:13px;color:var(--mut)}
+.tp span:last-child{white-space:nowrap}
 .cur{display:flex;align-items:center;justify-content:space-between;gap:8px;background:var(--bg);border:1px solid var(--ac);border-radius:12px;padding:8px 12px;margin-bottom:12px;font-size:14px}
 .cur button{border:0;background:none;color:var(--mut);cursor:pointer;font-size:15px}
 .sb{display:flex;gap:10px;align-items:flex-start;padding:10px 2px;border-bottom:1px solid var(--line)}
 .se{font-size:18px}
-.tdadd{display:flex;gap:8px;margin-top:12px}
-.tdadd input{flex:1;min-width:0;border:1px solid var(--line);background:var(--bg);color:var(--tx);border-radius:12px;padding:11px 12px;font:inherit;font-size:15px}
-.tdadd button{border:0;background:var(--ac);color:#fff;border-radius:12px;padding:0 18px;font:inherit;font-weight:700;cursor:pointer}
+.tdx{width:100%;margin-top:8px;border:1px solid var(--line);background:var(--bg);color:var(--tx);border-radius:12px;padding:11px 12px;font:inherit;font-size:15px}
 .tabs{display:flex;background:var(--bg);border-radius:12px;padding:3px;margin-bottom:12px}
 .tab{flex:1;border:0;background:none;color:var(--mut);font:inherit;font-weight:600;padding:8px;border-radius:10px;cursor:pointer}
 .tab.on{background:var(--card);color:var(--tx);box-shadow:0 1px 3px rgba(0,0,0,.15)}
@@ -83,67 +103,70 @@ input[type=range]{width:100%;accent-color:var(--ac)}
 .modal.on{display:flex}
 .sheet{background:var(--card);border-radius:24px;padding:24px;width:100%;max-width:360px;text-align:center}
 .sheet .big{font-size:56px}.sheet h2{margin:6px 0}
-.xp{font-size:30px;font-weight:800;color:var(--warn);margin:8px 0 16px}
 </style>
 </head>
 <body>
 <div class="app">
+<section class="page" id="pg-home">
   <div class="card">
     <div class="row"><h1>📚 স্টাডি টাইমার</h1><span class="pill" id="streak">🔥 ০</span></div>
-    <div class="row" style="margin-top:12px"><b id="lvl">লেভেল ১</b><span class="mut" id="xptxt">০ XP</span></div>
+    <div class="row" style="margin-top:12px"><b id="lvl">লেভেল ১</b></div>
     <div class="bar"><i id="xpbar"></i></div>
+    <div class="mut" id="lvnext" style="margin-top:6px"></div>
   </div>
 
   <div class="card">
     <div class="chips" id="modes"></div>
     <div class="ringwrap">
       <svg class="ring" viewBox="0 0 200 200"><circle class="bg" cx="100" cy="100" r="90"/><circle class="fg" id="fg" cx="100" cy="100" r="90" stroke-dasharray="565.5" stroke-dashoffset="565.5"/></svg>
-      <div class="center"><div class="av" id="av">🌱</div><div class="time" id="time">০০:০০</div><div class="mut" id="stname">বীজ</div></div>
+      <div class="center"><div class="av" id="av">🌱</div><div class="time" id="time">০০:০০</div><div class="mut" id="stname">চারা গাছ</div></div>
     </div>
     <div class="mut" style="text-align:center;margin-bottom:12px" id="today">আজ: ০ মিনিট</div>
-    <div class="cur" id="cur" style="display:none"></div>
+    <select id="tsel" class="tsel"></select>
+    <input id="tcu" class="tdx" placeholder="নতুন বিষয়ের নাম লিখুন" maxlength="40" style="display:none">
+    <input id="tpc" class="tdx" list="tpl" placeholder="টপিকের নাম (ঐচ্ছিক) — যেমন: অধ্যায় ৩" maxlength="60" autocomplete="off" style="display:none">
+    <datalist id="tpl"></datalist>
     <div class="btns"><button class="b" id="main">▶ শুরু</button><button class="b stop" id="stop" style="display:none">■ শেষ</button></div>
   </div>
+</section>
 
-  <div class="card">
-    <div class="row"><button class="chip" id="tdprev">‹</button><div style="text-align:center"><b id="tdname" style="cursor:pointer">আজ</b><div class="mut" id="tddate"></div></div><button class="chip" id="tdnext">›</button></div>
-    <div class="row" style="margin-top:10px"><b>📝 পড়ার তালিকা</b><span class="mut" id="tdcnt"></span></div>
-    <div id="tdlist"></div>
-    <button class="chip" id="tdcarry" style="display:none;margin-top:10px;width:100%">↪ গতকালের অসম্পন্নগুলো আজকে আনুন</button>
-    <div class="tdadd"><input id="tdin" placeholder="যেমন: পদার্থবিজ্ঞান অধ্যায় ৩" maxlength="120"><button id="tdadd">যোগ</button></div>
-  </div>
-
+<section class="page" id="pg-stats" style="display:none">
   <div class="card">
     <div class="tabs"><button class="tab on" id="ts">বিষয়</button><button class="tab" id="tw">সপ্তাহ</button><button class="tab" id="tm">মাস</button></div>
     <div id="pw">
     <div class="row"><b>এই সপ্তাহ</b><span class="mut" id="wk"></span></div>
     <div class="week" id="week"></div>
+    <div id="wd"></div>
     </div>
     <div id="pm" style="display:none">
     <div class="row"><button class="chip" id="mprev">‹</button><b id="mname">মাস</b><button class="chip" id="mnext">›</button></div>
     <div class="mh hd"><span>রবি</span><span>সোম</span><span>মঙ্গল</span><span>বুধ</span><span>বৃহ</span><span>শুক্র</span><span>শনি</span></div>
     <div class="mh" id="mgrid"></div>
     <div class="legend">কম <i style="background:var(--bg);border:1px solid var(--line)"></i><i style="background:color-mix(in srgb,var(--ac) 22%,var(--card))"></i><i style="background:color-mix(in srgb,var(--ac) 45%,var(--card))"></i><i style="background:var(--ac)"></i><i style="background:var(--ok)"></i> লক্ষ্য পূরণ</div>
-    <div class="grid" style="margin-top:14px"><div><b id="m1">০</b><span class="mut">এ মাসে মোট</span></div><div><b id="m2">০</b><span class="mut">পড়ার দিন</span></div><div><b id="m3">০</b><span class="mut">দিনে গড় (মি)</span></div></div>
+    <div id="md"></div>
+    <div class="msum"><div class="msh">📊 মাসের সারাংশ</div><div class="grid"><div><b id="m1">০</b><span class="mut">এ মাসে মোট</span></div><div><b id="m2">০</b><span class="mut">পড়ার দিন</span></div></div></div>
     </div>
-    <div id="ps" style="display:none"><div class="chips" style="margin:0 0 8px;justify-content:flex-start"><button class="chip on" data-f="all">সব</button><button class="chip" data-f="pend">⏳ বাকি</button><button class="chip" data-f="done">✅ সম্পন্ন</button></div><div id="slist"></div></div>
+    <div id="ps" style="display:none"><div class="chips" style="margin:0 0 8px;justify-content:flex-start"><button class="chip on" data-f="all">সব</button><button class="chip" data-f="pend">⏳ পড়া হয়নি</button><button class="chip" data-f="done">✅ পড়া হয়েছে</button></div><div id="slist"></div></div>
   </div>
+</section>
 
-  <div class="card">
-    <div class="grid">
-      <div><b id="s1">০</b><span class="mut">মোট ঘণ্টা</span></div>
-      <div><b id="s2">০</b><span class="mut">সেশন</span></div>
-      <div><b id="s3">০</b><span class="mut">সেরা দিন (মি)</span></div>
-    </div>
-  </div>
-
+<section class="page" id="pg-ach" style="display:none">
   <div class="card">
     <div class="row"><b>দৈনিক লক্ষ্য</b><span class="pill" id="tgtv">৪ ঘণ্টা</span></div>
     <input type="range" id="tgt" min="1" max="12" step="0.5" value="4">
     <div class="stages" id="stages"></div>
-    <div class="mut" style="margin-top:10px">যত বেশি পড়বেন, আপনার আইকন তত বড় হবে। লক্ষ্য পূরণ করলে বোনাস ২০ XP।</div>
+    <div class="mut" style="margin-top:10px">প্রতিদিন চারা থেকে শুরু। প্রতি ঘণ্টা পড়লে গাছ বাড়ে, ১২ ঘণ্টায় পূর্ণ মহীরুহ। লেভেল দেখুন "অর্জন" ট্যাবে।</div>
   </div>
+
+  <div class="card" id="pa"><b style="display:block">🏆 Daily Study Level System</b><div class="mut" style="margin-bottom:4px">আজকের মোট পড়া অনুযায়ী লেভেল</div><div id="llist"></div><b style="display:block;margin-top:18px">🌳 ১২ ঘণ্টার Study Tree Journey</b><div class="mut" style="margin-bottom:4px">প্রতিদিন চারা থেকে শুরু, প্রতি ঘণ্টায় গাছ বাড়ে</div><div id="tlist"></div></div>
+</section>
 </div>
+
+<nav id="nav"><div class="in">
+<button id="nv-home" class="on"><svg viewBox="0 0 24 24"><path d="M4 11 12 4l8 7v9h-5v-6H9v6H4z"/></svg>হোম</button>
+<button id="nv-stats"><svg viewBox="0 0 24 24"><path d="M6 20v-8M12 20V5M18 20v-5"/></svg>পরিসংখ্যান</button>
+<button id="nv-ach"><svg viewBox="0 0 24 24"><path d="M8 4h8v5a4 4 0 0 1-8 0zM8 6H5v1a3 3 0 0 0 3 3M16 6h3v1a3 3 0 0 1-3 3M12 13v4M8 20h8M10 17h4"/></svg>অর্জন</button>
+</div></nav>
 
 <div id="splash"><svg viewBox="0 0 108 108"><path fill="#fff" d="M30,34 L52,38 L52,76 L30,72 Z"/><path fill="#E4DCFF" d="M78,34 L56,38 L56,76 L78,72 Z"/><path fill="#FFC233" d="M54,26 L58,36 L50,36 Z"/></svg><b>স্টাডি টাইমার</b><span>Made by সাইফুর রহমান</span></div>
 
@@ -152,32 +175,65 @@ input[type=range]{width:100%;accent-color:var(--ac)}
 <div class="modal" id="modal"><div class="sheet">
   <div class="big" id="m_e">🌳</div><h2 id="m_t">সেশন শেষ!</h2>
   <div class="mut" id="m_d"></div>
-  <div class="xp" id="m_xp">+০ XP</div>
-  <button class="b" id="claim">XP নিন</button>
+    <button class="b" id="claim">ঠিক আছে</button>
 </div></div>
 
 <script>
 const $=id=>document.getElementById(id);
 const bn=n=>String(n).replace(/\d/g,d=>'০১২৩৪৫৬৭৮৯'[d]);
-const STAGES=[{m:0,e:'🌱',n:'বীজ'},{m:15,e:'🌿',n:'চারা'},{m:45,e:'🪴',n:'গাছ'},{m:90,e:'🌳',n:'বড় গাছ'},{m:180,e:'🌲',n:'বন'},{m:300,e:'🏞️',n:'জঙ্গল'}];
+const TS=[{n:'চারা গাছ',d:'মাটিতে নতুন চারা জন্মেছে'},{n:'নতুন পাতা',d:'চারায় ছোট ছোট পাতা গজিয়েছে'},{n:'ছোট গাছ',d:'গাছটি একটু বড় হয়েছে'},{n:'সতেজ গাছ',d:'গাছে অনেক সবুজ পাতা এসেছে'},{n:'ডালপালা বিস্তার',d:'গাছের ডালপালা ছড়িয়ে পড়ছে'},{n:'মজবুত গাছ',d:'গাছের কাণ্ড শক্ত ও মোটা হয়েছে'},{n:'কুঁড়ি এসেছে',d:'গাছে ফুলের কুঁড়ি দেখা যাচ্ছে'},{n:'প্রথম ফুল',d:'গাছে সুন্দর ফুল ফুটেছে'},{n:'ফুলে ভরা গাছ',d:'গাছটি ফুলে ফুলে ভরে গেছে'},{n:'ফল ধরেছে',d:'গাছে ছোট ছোট ফল এসেছে'},{n:'ফল পেকেছে',d:'গাছে পাকা ফল ঝুলছে'},{n:'মহীরুহ',d:'পূর্ণাঙ্গ বিশাল ফলবান গাছ! 🎉'}];
+let av_n=0,stk=-1;
+function stg(sec){return Math.min(12,Math.max(1,Math.floor(sec/3600)))}
+function treeSVG(n){
+  let s='<ellipse cx="50" cy="91" rx="34" ry="5" fill="#8d6e4a" opacity=".5"/>';
+  if(n<=2){
+    const top=n===1?68:52;
+    s+='<path d="M50 91 L50 '+top+'" stroke="#43a047" stroke-width="3.2" stroke-linecap="round"/>';
+    const L=n===1?[[43,70,-28],[57,70,28]]:[[43,78,-30],[57,76,30],[43,66,-30],[57,64,30],[44,55,-30],[56,53,30]];
+    L.forEach(a=>{s+='<ellipse cx="'+a[0]+'" cy="'+a[1]+'" rx="'+(n===1?8:6.5)+'" ry="'+(n===1?4:3.2)+'" transform="rotate('+a[2]+' '+a[0]+' '+a[1]+')" fill="#66bb6a"/>'});
+    if(n===2)s+='<ellipse cx="50" cy="49" rx="3" ry="5" fill="#81c784"/>';
+  }else{
+    const C={3:[66,3,13,57],4:[60,4,19,50],5:[58,5,23,46],6:[56,8,26,42],7:[56,8,26,42],8:[56,8,26,42],9:[56,8,26,42],10:[56,8,26,42],11:[56,8,26,42],12:[54,10,31,40]}[n];
+    const ty=C[0],tw=C[1],cr=C[2],cy=C[3];
+    s+='<rect x="'+(50-tw/2)+'" y="'+ty+'" width="'+tw+'" height="'+(91-ty)+'" rx="1.5" fill="#795548"/>';
+    if(n>=12)s+='<circle cx="50" cy="'+cy+'" r="'+(cr+9)+'" fill="#ffd54f" opacity=".28"/>';
+    s+='<circle cx="'+(50-cr*.62)+'" cy="'+(cy+cr*.28)+'" r="'+(cr*.72)+'" fill="#66bb6a"/><circle cx="'+(50+cr*.62)+'" cy="'+(cy+cr*.28)+'" r="'+(cr*.72)+'" fill="#66bb6a"/><circle cx="50" cy="'+cy+'" r="'+cr+'" fill="'+(n>=10?'#388e3c':'#43a047')+'"/>';
+    if(n===5||n===6)s+='<path d="M50 '+(ty+8)+' L'+(50-cr*.75)+' '+(cy+cr*.2)+' M50 '+(ty+8)+' L'+(50+cr*.75)+' '+(cy+cr*.2)+' M50 '+(ty+3)+' L50 '+(cy-cr*.4)+'" stroke="#6d4c41" stroke-width="'+(n===5?2.4:1.6)+'" stroke-linecap="round" fill="none"/>';
+    const P=[[-.5,-.2],[.4,-.5],[0,-.7],[.6,.1],[-.7,.2],[.1,.2],[-.2,-.4],[.3,.5],[-.45,.5],[.7,-.25],[-.1,.7],[.55,.6],[0,0],[-.3,.05]];
+    const pt=i=>[(50+P[i][0]*cr*.85).toFixed(1),(cy+P[i][1]*cr*.8).toFixed(1)];
+    const dot=(i,r,c)=>{const q=pt(i);return '<circle cx="'+q[0]+'" cy="'+q[1]+'" r="'+r+'" fill="'+c+'"/>'};
+    const flo=(i,r,c)=>{const q=pt(i);return '<circle cx="'+q[0]+'" cy="'+q[1]+'" r="'+r+'" fill="'+c+'"/><circle cx="'+q[0]+'" cy="'+q[1]+'" r="'+(r*.35)+'" fill="#ffee58"/>'};
+    if(n===7)for(let i=0;i<7;i++)s+=dot(i,1.8,'#f8bbd0');
+    if(n===8)for(let i=0;i<5;i++)s+=flo(i,3.6,'#f48fb1');
+    if(n===9)for(let i=0;i<14;i++)s+=flo(i,3.6,i%2?'#ec407a':'#f06292');
+    if(n===10)for(let i=0;i<9;i++)s+=dot(i,2.9,'#9ccc65');
+    if(n===11)for(let i=0;i<10;i++)s+=dot(i,3.6,i%3?'#e53935':'#fb8c00');
+    if(n===12){for(let i=0;i<14;i++)s+=dot(i,3.8,i%3?'#e53935':'#fb8c00');
+      s+='<path d="M16 22 l2 5 5 2 -5 2 -2 5 -2 -5 -5 -2 5 -2z M84 14 l1.6 4 4 1.6 -4 1.6 -1.6 4 -1.6 -4 -4 -1.6 4 -1.6z" fill="#ffca28"/>'}
+  }
+  return '<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">'+s+'</svg>';
+}
+function tl(){
+  const hk=Math.floor(((S.days[dk()]||0)+el())/3600);
+  $('tlist').innerHTML=TS.map((x,i)=>{const got=i===0||hk>=i+1;return '<div class="sb" style="opacity:'+(got?1:.5)+'"><span style="width:46px;flex:none">'+treeSVG(i+1)+'</span><div style="flex:1"><div><b>'+bn(i+1)+'. '+x.n+'</b></div><div class="mut">'+x.d+'</div><div class="mut">'+bn(i+1)+' ঘণ্টা</div></div><span class="se">'+(got?'✅':'🔒')+'</span></div>'}).join('');
+}
 const MODES=[{k:'free',t:'⏱ স্টপওয়াচ',g:0},{k:'f25',t:'২৫ মি',g:1500},{k:'f45',t:'৪৫ মি',g:2700},{k:'f60',t:'৬০ মি',g:3600}];
 const KEY='studytimer_v1';
-let S={days:{},xp:0,sessions:0,target:4,mode:'free',run:null,pending:null,todos:{},cur:null};
+let S={days:{},sessions:0,target:4,mode:'free',run:null,pending:null,todos:{},sub:null,topic:null,st:{},tp:{}};
 try{const r=localStorage.getItem(KEY);if(r)S=Object.assign(S,JSON.parse(r))}catch(e){}
 const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(S))}catch(e){}};
 const dk=d=>{d=d||new Date();return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')};
 const el=()=>!S.run?0:Math.floor((S.run.acc+(S.run.paused?0:Date.now()-S.run.start))/1000);
 const mode=()=>MODES.find(m=>m.k===S.mode)||MODES[0];
-const hm=s=>{const m=Math.floor(s/60);return m>=60?bn(Math.floor(m/60))+' ঘ '+bn(m%60)+' মি':bn(m)+' মিনিট'};
+const hm=s=>{const m=Math.floor(s/60),h=Math.floor(m/60),r=m%60;return h?bn(h)+' ঘণ্টা'+(r?' '+bn(r)+' মিনিট':''):bn(m)+' মিনিট'};
 const clock=s=>bn(String(Math.floor(s/60)).padStart(2,'0'))+':'+bn(String(s%60).padStart(2,'0'));
 
 function beep(){if(window.Native)return;try{const c=new (window.AudioContext||window.webkitAudioContext)();[0,.35,.7].forEach(t=>{const o=c.createOscillator(),g=c.createGain();o.frequency.value=880;o.connect(g);g.connect(c.destination);g.gain.setValueAtTime(.2,c.currentTime+t);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+t+.3);o.start(c.currentTime+t);o.stop(c.currentTime+t+.3)})}catch(e){}}
 if(navigator.vibrate){}
 
-function streak(){let n=0,d=new Date();if((S.days[dk(d)]||0)<900)d.setDate(d.getDate()-1);while((S.days[dk(d)]||0)>=900){n++;d.setDate(d.getDate()-1)}return n}
-function lvl(){const l=1+Math.floor(Math.sqrt(S.xp/30));return{l,a:30*(l-1)**2,b:30*l**2}}
+function streak(){const mk=dk().slice(0,7);let n=0,d=new Date();if((S.days[dk(d)]||0)<900)d.setDate(d.getDate()-1);while(dk(d).slice(0,7)===mk&&(S.days[dk(d)]||0)>=900){n++;d.setDate(d.getDate()-1)}return n}
 
-let lk=null,le=0;
+let lk=null,le=0,lo='';
 function sync(){
   if(!window.Native)return;
   try{
@@ -186,47 +242,51 @@ function sync(){
     const g=mode().g,end=run&&g?S.run.start+g*1000-S.run.acc:0;
     if(end){if(Math.abs(end-le)>1500){le=end;Native.schedule(end)}}
     else if(le){if(Date.now()<le-1500)Native.cancel();le=0}
+    if(run){const cd=!!g,when=cd?end:S.run.start-S.run.acc,txt=S.sub?(S.sub+(S.topic?' · '+S.topic:'')):(cd?'ফোকাস টাইমার':'স্টপওয়াচ'),key=when+'|'+cd+'|'+txt;if(key!==lo){lo=key;Native.ongoing(when,cd,txt)}}
+    else if(lo){lo='';Native.ongoingCancel()}
   }catch(e){}
 }
 function render(){sync();
   const e=el(),m=mode(),todaySec=(S.days[dk()]||0)+e,tgtSec=S.target*3600;
-  const tm=Math.floor(todaySec/60);let st=STAGES[0];STAGES.forEach(x=>{if(tm>=x.m)st=x});
-  $('av').textContent=st.e;$('stname').textContent=st.n;$('av').className='av'+(S.run&&!S.run.paused?' run':'');
+  const pr=todaySec/tgtSec,sn=stg(todaySec);
+  if(av_n!==sn){av_n=sn;$('av').innerHTML=treeSVG(sn)}$('stname').textContent=TS[sn-1].n+(pr>=1?' ✅':'');$('av').className='av'+(S.run&&!S.run.paused?' run':'');
   $('time').textContent=clock(m.g&&S.run?Math.max(0,m.g-e):(m.g&&!S.run?m.g:e));
   $('fg').style.strokeDashoffset=565.5*(1-Math.min(1,todaySec/tgtSec));
-  $('today').textContent='আজ: '+hm(todaySec)+' / '+bn(S.target)+' ঘণ্টা';
+  $('tgtv').textContent=hm(tgtSec);$('today').textContent='আজ: '+hm(todaySec)+' / '+hm(tgtSec);
   $('main').textContent=!S.run?'▶ শুরু':S.run.paused?'▶ চালু করুন':'⏸ বিরতি';
   $('stop').style.display=S.run?'block':'none';
   $('modes').innerHTML=MODES.map(x=>`<button class="chip${x.k===S.mode?' on':''}" data-k="${x.k}" ${S.run?'disabled':''}>${x.t}</button>`).join('');
-  const L=lvl();$('lvl').textContent='লেভেল '+bn(L.l);$('xptxt').textContent=bn(S.xp)+' / '+bn(L.b)+' XP';
-  $('xpbar').style.width=((S.xp-L.a)/(L.b-L.a)*100)+'%';
+  dayLevelUI(todaySec);
+  
   $('streak').textContent='🔥 '+bn(streak())+' দিন';
-  $('stages').innerHTML=STAGES.map(x=>`<div class="${tm>=x.m?'u':''}"><span>${x.e}</span>${bn(x.m)}মি</div>`).join('');
+  const hk=Math.min(12,Math.floor(todaySec/3600));if(stk!==hk){stk=hk;$('stages').innerHTML=TS.map((x,i)=>'<div class="'+(i<Math.max(1,hk)?'u':'')+'"><span>'+treeSVG(i+1)+'</span></div>').join('')}
 }
 function stats(){
-  const keys=Object.keys(S.days),tot=keys.reduce((a,k)=>a+S.days[k],0),best=Math.max(0,...keys.map(k=>S.days[k]));
-  $('s1').textContent=bn((tot/3600).toFixed(1));$('s2').textContent=bn(S.sessions);$('s3').textContent=bn(Math.floor(best/60));
+  
   const names=['রবি','সোম','মঙ্গল','বুধ','বৃহ','শুক্র','শনি'];let h='',sum=0;const mx=Math.max(S.target*3600,...[...Array(7)].map((_,i)=>{const d=new Date();d.setDate(d.getDate()-6+i);return S.days[dk(d)]||0}));
   for(let i=0;i<7;i++){const d=new Date();d.setDate(d.getDate()-6+i);const v=S.days[dk(d)]||0;sum+=v;
-    h+=`<div class="col ${v>=S.target*3600?'hit':''} ${i===6?'today':''}"><i style="height:${Math.max(4,v/mx*80)}px"></i>${names[d.getDay()]}</div>`}
-  $('week').innerHTML=h;$('wk').textContent='মোট '+hm(sum);month();
+    const kk=dk(d);h+=`<div class="col ${v>=S.target*3600?'hit':''} ${i===6?'today':''} ${kk===selW?'sel':''}" data-k="${kk}"><i style="height:${Math.max(4,v/mx*80)}px"></i>${names[d.getDay()]}<br>${bn(d.getDate())}</div>`}
+  $('week').innerHTML=h;$('wd').innerHTML=dayDetail(selW);$('wk').textContent='মোট '+hm(sum);month();
 }
 
 function finish(auto){
   if(!S.run)return;if(el()>=60||auto)flush();const e=el(),k=dk(),before=S.days[k]||0;
   S.run=null;if(e>=60||auto){S.days[k]=before+e;S.sessions++;
-    const bonus=before<S.target*3600&&before+e>=S.target*3600?20:0;
-    S.pending={sec:e,xp:Math.floor(e/60)+bonus,bonus};showSummary()}
+    S.pending={sec:e,mk:k.slice(0,7)};showSummary()}
   save();render();stats();
 }
 function showSummary(){
   const p=S.pending;if(!p)return;
-  const tm=Math.floor((S.days[dk()]||0)/60);let st=STAGES[0];STAGES.forEach(x=>{if(tm>=x.m)st=x});
-  $('m_e').textContent=st.e;$('m_d').textContent='পড়েছেন '+hm(p.sec)+(p.bonus?' · লক্ষ্য পূরণ 🎉':'');
-  $('m_xp').textContent='+'+bn(p.xp)+' XP';$('modal').classList.add('on');
+  const g2=stg(S.days[dk()]||0);
+  const q=dayLv(S.days[dk()]||0);$('m_e').innerHTML=treeSVG(g2);$('m_d').textContent='পড়েছেন '+hm(p.sec)+(q?' · আজকের লেভেল: '+q.en:'');
+  $('modal').classList.add('on');
 }
-$('claim').onclick=()=>{if(window.Native)try{Native.stop()}catch(e){}if(S.pending){S.xp+=S.pending.xp;S.pending=null}save();$('modal').classList.remove('on');render()};
-$('main').onclick=()=>{
+$('claim').onclick=()=>{if(window.Native)try{Native.stop()}catch(e){}S.pending=null;save();$('modal').classList.remove('on');render()};
+$('tsel').onchange=()=>{const v=$('tsel').value;if(v==='__c'){$('tcu').style.display='block';$('tcu').focus();return}$('tcu').style.display='none';setSub(v)};
+$('tcu').onkeydown=e=>{if(e.key==='Enter')applyCustom()};$('tcu').onblur=()=>{if($('tcu').value.trim())applyCustom()};
+$('tpc').onchange=()=>setTopic($('tpc').value);
+$('tpc').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();setTopic($('tpc').value);$('tpc').blur()}};
+$('main').onclick=()=>{if(S.sub&&$('tpc').value.trim()!==(S.topic||''))setTopic($('tpc').value);if($('tsel').value==='__c'){applyCustom();if($('tsel').value==='__c'){$('tcu').focus();return}}
   if(!S.run)S.run={start:Date.now(),acc:0,paused:false};
   else if(S.run.paused){S.run.start=Date.now();S.run.paused=false}
   else{S.run.acc+=Date.now()-S.run.start;S.run.paused=true}
@@ -239,56 +299,112 @@ $('tgtv').textContent=bn(S.target)+' ঘণ্টা';
 
 let mo=0;
 const MN=['জানুয়ারি','ফেব্রুয়ারি','মার্চ','এপ্রিল','মে','জুন','জুলাই','আগস্ট','সেপ্টেম্বর','অক্টোবর','নভেম্বর','ডিসেম্বর'];
+let selW=dk(),selM=null;
+const WDN=['রবিবার','সোমবার','মঙ্গলবার','বুধবার','বৃহস্পতিবার','শুক্রবার','শনিবার'];
+function subSecs(k){
+  const m={},g=t=>{const n=t.trim().toLowerCase();return m[n]=m[n]||{t,sec:0}};
+  const day=(S.st&&S.st[k])||{};Object.keys(day).forEach(s=>{g(s).sec+=day[s]});
+  if(k===dk()&&S.run&&S.sub){const live=el()-(S.run.mark||0);if(live>0)g(S.sub).sec+=live}
+  return m}
+function dayDetail(k){
+  const d=new Date(k+'T00:00:00'),title=WDN[d.getDay()]+', '+bn(d.getDate())+' '+MN[d.getMonth()],future=k>dk();
+  const tot=(S.days[k]||0)+(k===dk()?el():0);
+  let h='<div class="dd"><div class="row"><b>'+title+'</b><span class="pill">'+(future?'আগামী দিন':tot>=60?hm(tot):'পড়া হয়নি')+'</span></div>';
+  if(future)return h+'</div>';
+  const tpm=tpSecs(k),sm=subSecs(k),st=Object.values(sm).filter(o=>o.sec>=60).sort((a,b)=>b.sec-a.sec),seen=new Set(st.map(o=>o.t.trim().toLowerCase())),other=tot-Object.values(sm).reduce((a,o)=>a+o.sec,0);
+  if(st.length||other>=60){
+    h+='<div class="ddh">✅ যা পড়েছেন</div>'+st.map(o=>'<div class="dg"><div class="dr"><span>'+esc(o.t)+'</span><b>'+hm(o.sec)+'</b></div>'+tLines(tpm[o.t.trim().toLowerCase()])+'</div>').join('');
+    if(other>=60)h+='<div class="dr"><span class="mut">বিষয় বাছা হয়নি</span><b>'+hm(other)+'</b></div>';
+  }
+  const ns=PRE.concat(S.subj||[]).filter((t,i,a)=>a.findIndex(x=>x.toLowerCase()===t.toLowerCase())===i&&!seen.has(t.trim().toLowerCase()));
+  if(ns.length)h+='<div class="ddh">⏳ যা পড়েননি</div>'+ns.map(t=>'<span class="nc">'+esc(t)+'</span>').join('');
+  return h+'</div>';
+}
 function month(){
   const n=new Date(),d=new Date(n.getFullYear(),n.getMonth()+mo,1),y=d.getFullYear(),m=d.getMonth(),dim=new Date(y,m+1,0).getDate();
-  let h='',tot=0,days=0;for(let i=0;i<d.getDay();i++)h+='<div></div>';
+  const ym=y+'-'+String(m+1).padStart(2,'0');if(!selM||selM.slice(0,7)!==ym)selM=mo===0?dk():ym+'-01';let h='',tot=0,days=0;for(let i=0;i<d.getDay();i++)h+='<div></div>';
   for(let i=1;i<=dim;i++){const v=S.days[dk(new Date(y,m,i))]||0;tot+=v;if(v>=60)days++;
     const r=v/(S.target*3600),lv=v<60?0:r>=1?4:r>=.66?3:r>=.33?2:1;
-    h+='<div class="cd l'+lv+(mo===0&&i===n.getDate()?' td':'')+'" title="'+hm(v)+'">'+bn(i)+'</div>'}
-  $('mgrid').innerHTML=h;$('mname').textContent=MN[m]+' '+bn(y);$('mnext').disabled=mo>=0;
-  $('m1').textContent=bn((tot/3600).toFixed(1))+' ঘ';$('m2').textContent=bn(days);$('m3').textContent=bn(days?Math.round(tot/days/60):0);
+    h+='<div class="cd l'+lv+(mo===0&&i===n.getDate()?' td':'')+(dk(new Date(y,m,i))===selM?' sel':'')+'" data-k="'+dk(new Date(y,m,i))+'" title="'+hm(v)+'">'+bn(i)+'</div>'}
+  $('mgrid').innerHTML=h;$('md').innerHTML=dayDetail(selM);$('mname').textContent=MN[m]+' '+bn(y);$('mnext').disabled=mo>=0;
+  $('m1').textContent=hm(tot);$('m2').textContent=bn(days);
 }
 const rid=()=>Date.now().toString(36)+Math.random().toString(36).slice(2,6);
-function findCur(){return S.cur?(S.todos[S.cur.k]||[]).find(x=>x.id===S.cur.id)||null:null}
-function flush(){if(!S.run)return;const e=el(),dl=e-(S.run.mark||0),c=findCur();if(c&&dl>0)c.sec=(c.sec||0)+dl;S.run.mark=e}
-function pick(x,k){flush();if(S.cur&&x.id&&S.cur.id===x.id)S.cur=null;else{if(!x.id)x.id=rid();S.cur={k,id:x.id}}curUI()}
-function curUI(){const c=findCur(),b=$('cur');if(!c){b.style.display='none';return}b.style.display='flex';b.innerHTML='<span>📖 '+esc(c.t)+'</span><button id="curx">✕</button>';$('curx').onclick=()=>{flush();S.cur=null;save();curUI();todo()}}
+function addSub(name){name=name.trim();const hit=PRE.concat(S.subj||[]).find(x=>x.toLowerCase()===name.toLowerCase());if(hit)return hit;S.subj=(S.subj||[]).concat(name);return name}
+function flush(){if(!S.run)return;const e=el(),dl=e-(S.run.mark||0);if(dl>0&&S.sub){const k=dk();S.st=S.st||{};S.st[k]=S.st[k]||{};S.st[k][S.sub]=(S.st[k][S.sub]||0)+dl;
+  if(S.topic){S.tp=S.tp||{};S.tp[k]=S.tp[k]||{};const o=S.tp[k][S.sub]=S.tp[k][S.sub]||{};o[S.topic]=(o[S.topic]||0)+dl}}S.run.mark=e}
+function topicsOf(sub){const n=(sub||'').trim().toLowerCase(),seen={},ks=Object.keys(S.tp||{}).sort().reverse();
+  ks.forEach(k=>Object.keys(S.tp[k]).forEach(s=>{if(s.trim().toLowerCase()!==n)return;Object.keys(S.tp[k][s]).forEach(t=>{if(!(t in seen))seen[t]=1})}));return Object.keys(seen)}
+function fillTopics(){const l=$('tpl');if(l)l.innerHTML=topicsOf(S.sub).map(t=>'<option value="'+esc(t)+'">').join('')}
+function setTopic(v){v=(v||'').trim().slice(0,60);if(v&&S.sub){const hit=topicsOf(S.sub).find(x=>x.toLowerCase()===v.toLowerCase());if(hit)v=hit}
+  if((S.topic||'')===v)return;flush();S.topic=v||null;save();render()}
+function tpSecs(k){const m={},day=(S.tp&&S.tp[k])||{};
+  Object.keys(day).forEach(s=>{const n=s.trim().toLowerCase();m[n]=m[n]||{};Object.keys(day[s]).forEach(t=>{m[n][t]=(m[n][t]||0)+day[s][t]})});
+  if(k===dk()&&S.run&&S.sub&&S.topic){const live=el()-(S.run.mark||0);if(live>0){const n=S.sub.trim().toLowerCase();m[n]=m[n]||{};m[n][S.topic]=(m[n][S.topic]||0)+live}}
+  return m}
+function tLines(mp){return Object.keys(mp||{}).map(t=>[t,mp[t]]).filter(x=>x[1]>=60).sort((a,b)=>b[1]-a[1]).map(x=>'<div class="tp"><span>↳ '+esc(x[0])+'</span><span>'+hm(x[1])+'</span></div>').join('')}
+function setSub(name){flush();S.sub=name||null;S.topic=null;save();curUI();render()}
+function curUI(){const t=$('tsel');if(!t)return;
+  if(t.value!=='__c')t.value=S.sub&&[...t.options].some(o=>o.value===S.sub)?S.sub:'';
+  const tp=$('tpc');if(tp){tp.style.display=S.sub&&t.value!=='__c'?'block':'none';if(document.activeElement!==tp)tp.value=S.topic||'';fillTopics()}}
+function applyCustom(){const v=$('tcu').value.trim();if(!v)return;const n=addSub(v);$('tcu').value='';$('tcu').style.display='none';$('tsel').value='';subOpts();setSub(n)}
 let sf='all';
 function subj(){
-  const m={};
-  Object.keys(S.todos).forEach(k=>S.todos[k].forEach(x=>{const n=x.t.trim().toLowerCase(),o=m[n]=m[n]||{t:x.t,sec:0,done:false};o.sec+=x.sec||0;if(x.d)o.done=true}));
-  let L=Object.values(m);
+  const mk=dk().slice(0,7),m={},tmap={},g=t=>{const n=t.trim().toLowerCase();return m[n]=m[n]||{t,sec:0}};
+  PRE.concat(S.subj||[]).forEach(g);
+  const ks=new Set(Object.keys(S.st||{}).filter(k=>k.slice(0,7)===mk));ks.add(dk());
+  ks.forEach(k=>{const sm=subSecs(k);Object.keys(sm).forEach(n=>{g(sm[n].t).sec+=sm[n].sec});
+    const tm=tpSecs(k);Object.keys(tm).forEach(n=>{tmap[n]=tmap[n]||{};Object.keys(tm[n]).forEach(t=>{tmap[n][t]=(tmap[n][t]||0)+tm[n][t]})})});
+  let L=Object.values(m).map(o=>Object.assign(o,{done:o.sec>=60}));
   if(sf==='pend')L=L.filter(o=>!o.done);if(sf==='done')L=L.filter(o=>o.done);
   L.sort((a,b)=>(a.done-b.done)||b.sec-a.sec);
-  $('slist').innerHTML=L.map(o=>'<div class="sb"><span class="se">'+(o.done?'✅':'⏳')+'</span><div style="flex:1"><div>'+esc(o.t)+'</div><div class="mut">'+(o.sec?'⏱ '+hm(o.sec):'এখনো সময় দেওয়া হয়নি')+' · '+(o.done?'সম্পন্ন':'বাকি')+'</div></div></div>').join('')||'<div class="mut" style="text-align:center;padding:14px">কোনো বিষয় নেই</div>';
+  $('slist').innerHTML='<div class="mut" style="margin:2px 0 6px">📅 '+mkName(mk)+' মাসের হিসাব · প্রতি মাসে নতুন করে শুরু</div>'+(L.map(o=>'<div class="sb"><span class="se">'+(o.done?'✅':'⏳')+'</span><div style="flex:1"><div>'+esc(o.t)+'</div><div class="mut">'+(o.sec?'⏱ এ মাসে পড়া '+hm(o.sec):'এ মাসে এখনো পড়া হয়নি')+'</div>'+tLines(tmap[o.t.trim().toLowerCase()])+'</div></div>').join('')||'<div class="mut" style="text-align:center;padding:14px">কোনো বিষয় নেই</div>');
 }
-let td=0;
+const LV=[{e:'🌱',en:'Starter'},{e:'📘',en:'Learner'},{e:'🥊',en:'Fighter'},{e:'🎯',en:'Focused'},{e:'🔥',en:'Dedicated'},{e:'⚔️',en:'Warrior'},{e:'🧠',en:'Expert'},{e:'👑',en:'Legend'},{e:'🥉',en:'Bronze Achiever'},{e:'🥈',en:'Silver Achiever'},{e:'🥇',en:'Gold Achiever'},{e:'💠',en:'Platinum Achiever'},{e:'💎',en:'Diamond Achiever'}];
+function dayLv(sec){const n=sec>12*3600?13:Math.min(12,Math.floor(sec/3600));return n?Object.assign({n},LV[n-1]):null}
+function dayLevelUI(sec){
+  const l=dayLv(sec),n=l?l.n:0;
+  $('lvl').textContent=l?l.e+' '+l.en:'📖 লেভেল: শুরু হয়নি';
+  if(n>=13){$('xpbar').style.width='100%';$('lvnext').textContent='🏆 আজকের সর্বোচ্চ লেভেল পূর্ণ!'}
+  else if(n===12){$('xpbar').style.width='100%';$('lvnext').textContent='পরের লেভেল: '+LV[12].e+' '+LV[12].en+' — ১২ ঘণ্টা পার হলেই'}
+  else{const nx=LV[n];$('xpbar').style.width=((sec%3600)/3600*100)+'%';$('lvnext').textContent='পরের লেভেল: '+nx.e+' '+nx.en+' — আর '+hm((n+1)*3600-sec)}
+}
+function ach(){
+  const sec=(S.days[dk()]||0)+el(),tl=dayLv(sec),tn=tl?tl.n:0;
+  $('llist').innerHTML=LV.map((x,i)=>{const on=tn>=i+1;return '<div class="sb" style="opacity:'+(on?1:.5)+'"><span class="se">'+x.e+'</span><div style="flex:1"><div><b>'+x.en+'</b></div><div class="mut">'+(i<12?bn(i+1)+' ঘণ্টা':'১২ ঘণ্টার বেশি')+'</div></div><span class="se">'+(on?'✅':'🔒')+'</span></div>'}).join('');
+}
+const mkName=mk=>MN[+mk.slice(5,7)-1]+' '+bn(mk.slice(0,4));
+(function(){
+  if(S.stv>=1)return;S.st=S.st||{};
+  if(S.cur){const it=(S.todos[S.cur.k]||[]).find(x=>x.id===S.cur.id);S.sub=it?it.t:null;delete S.cur}
+  Object.keys(S.todos||{}).forEach(k=>(S.todos[k]||[]).forEach(x=>{if(x.sec>0){S.st[k]=S.st[k]||{};S.st[k][x.t]=(S.st[k][x.t]||0)+x.sec}delete x.sec;delete x.id}));
+  S.stv=1;save();
+})();
 const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-const tdDate=o=>{const d=new Date();d.setDate(d.getDate()+o);return d};
-function todo(){
-  const d=tdDate(td),k=dk(d),L=S.todos[k]||[],ds=bn(d.getDate())+' '+MN[d.getMonth()];
-  $('tdname').textContent=td===0?'আজ':td===-1?'গতকাল':td===1?'আগামীকাল':ds;
-  $('tddate').textContent=Math.abs(td)<=1?ds:'';
-  $('tdlist').innerHTML=L.map((x,i)=>'<div class="ti'+(x.d?' dn':'')+(S.cur&&x.id&&S.cur.id===x.id?' sel':'')+'"><input type="checkbox" data-i="'+i+'" '+(x.d?'checked':'')+'><span>'+esc(x.t)+(x.sec?'<small>⏱ '+hm(x.sec)+'</small>':'')+'</span><button class="pl" data-p="'+i+'">▶</button><button data-x="'+i+'">✕</button></div>').join('')||'<div class="mut" style="text-align:center;padding:12px">এই দিনের জন্য কিছু যোগ করা হয়নি</div>';
-  const dn=L.filter(x=>x.d).length;$('tdcnt').textContent=L.length?bn(dn)+'/'+bn(L.length)+' সম্পন্ন':'';
-  const y=S.todos[dk(tdDate(-1))]||[];$('tdcarry').style.display=td===0&&y.some(x=>!x.d&&!x.c)?'block':'none';
+const PRE=['গণিত','রিটেন','প্রিলি','সাবজেক্টিভ'];
+function optHTML(ph){return '<option value="">'+ph+'</option>'+PRE.concat(S.subj.filter(x=>!PRE.includes(x))).map(x=>'<option value="'+esc(x)+'">'+esc(x)+'</option>').join('')+'<option value="__c">✏️ কাস্টম</option>'}
+function subOpts(){
+  S.subj=S.subj||[];
+  const t=$('tsel'),tc=t.value;t.innerHTML=optHTML('📖 বিষয় বাছুন (ঐচ্ছিক)');if(tc==='__c')t.value='__c';curUI();
 }
-function addTodo(){const v=$('tdin').value.trim();if(!v)return;const k=dk(tdDate(td));(S.todos[k]=S.todos[k]||[]).push({t:v,d:false});$('tdin').value='';save();todo()}
-$('tdadd').onclick=addTodo;$('tdin').onkeydown=e=>{if(e.key==='Enter')addTodo()};
-$('tdprev').onclick=()=>{td--;todo()};$('tdnext').onclick=()=>{td++;todo()};$('tdname').onclick=()=>{td=0;todo()};
-$('tdcarry').onclick=()=>{const yk=dk(tdDate(-1)),tk=dk(tdDate(0));(S.todos[yk]||[]).forEach(x=>{if(!x.d&&!x.c){x.c=true;(S.todos[tk]=S.todos[tk]||[]).push({t:x.t,d:false})}});save();todo()};
-$('tdlist').onclick=e=>{const k=dk(tdDate(td)),L=S.todos[k]||[],t=e.target;
-  if(t.dataset.p!==undefined)pick(L[+t.dataset.p],k);
-  else if(t.dataset.i!==undefined)L[+t.dataset.i].d=t.checked;
-  else if(t.dataset.x!==undefined){L.splice(+t.dataset.x,1);if(!L.length)delete S.todos[k]}
-  else return;save();todo()};
-function tab(t){['pw','pm','ps'].forEach((p,i)=>$(p).style.display=i===t?'block':'none');['tw','tm','ts'].forEach((p,i)=>$(p).classList.toggle('on',i===t));if(t===2)subj()}
+function tab(t){['pw','pm','ps'].forEach((p,i)=>$(p).style.display=i===t?'block':'none');['tw','tm','ts'].forEach((p,i)=>$(p).classList.toggle('on',i===t));if(t===2)subj();if(t<2)stats()}
 $('tw').onclick=()=>tab(0);$('tm').onclick=()=>tab(1);$('ts').onclick=()=>tab(2);
+function page(n){
+  ['home','stats','ach'].forEach(x=>{$('pg-'+x).style.display=x===n?'block':'none';$('nv-'+x).classList.toggle('on',x===n)});
+  try{window.scrollTo(0,0)}catch(e){}
+  if(n==='stats'){stats();subj()}
+  if(n==='ach'){ach();tl();render()}
+}
+['home','stats','ach'].forEach(x=>{$('nv-'+x).onclick=()=>page(x)});
+document.addEventListener('focusin',e=>{if(['tcu','tpc'].includes(e.target.id))$('nav').style.display='none'});
+document.addEventListener('focusout',e=>{if(['tcu','tpc'].includes(e.target.id))$('nav').style.display='flex'});
 $('ps').onclick=e=>{const f=e.target.dataset&&e.target.dataset.f;if(f){sf=f;document.querySelectorAll('#ps .chip').forEach(c=>c.classList.toggle('on',c.dataset.f===f));subj()}};
-$('mprev').onclick=()=>{mo--;month()};$('mnext').onclick=()=>{if(mo<0){mo++;month()}};
+$('mprev').onclick=()=>{mo--;month()};
+$('week').onclick=e=>{const c=e.target.closest('.col');if(c&&c.dataset.k){selW=c.dataset.k;stats()}};
+$('mgrid').onclick=e=>{const c=e.target.closest('.cd');if(c&&c.dataset.k){selM=c.dataset.k;month()}};$('mnext').onclick=()=>{if(mo<0){mo++;month()}};
 setInterval(()=>{if(S.run&&!S.run.paused){const g=mode().g;if(g&&el()>=g){beep();finish(true);return}render()}},500);
 document.addEventListener('visibilitychange',()=>{if(!document.hidden)render()});
-render();stats();todo();curUI();tab(2);if(S.pending)showSummary();
+render();stats();curUI();subOpts();tab(2);if(S.pending)showSummary();
 setTimeout(()=>{const s=$('splash');if(s){s.classList.add('hide');setTimeout(()=>s.remove(),600)}},1800);
 </script>
 </body>

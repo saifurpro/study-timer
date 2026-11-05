@@ -459,7 +459,31 @@ const hm=s=>{const m=Math.floor(s/60),h=Math.floor(m/60),r=m%60;return h?bn(h)+'
 const clock=s=>bn(String(Math.floor(s/60)).padStart(2,'0'))+':'+bn(String(s%60).padStart(2,'0'));
 const hms=s=>bn([Math.floor(s/3600),Math.floor(s/60)%60,s%60].map(n=>String(n).padStart(2,'0')).join(':'));
 
-function beep(){if(window.Native)return;try{const c=new (window.AudioContext||window.webkitAudioContext)();[0,.35,.7].forEach(t=>{const o=c.createOscillator(),g=c.createGain();o.frequency.value=880;o.connect(g);g.connect(c.destination);g.gain.setValueAtTime(.2,c.currentTime+t);g.gain.exponentialRampToValueAtTime(.001,c.currentTime+t+.3);o.start(c.currentTime+t);o.stop(c.currentTime+t+.3)})}catch(e){}}
+let alarmAudio=null;
+function unlockAlarmAudio(){
+  if(window.Native)return;
+  const AudioContext=window.AudioContext||window.webkitAudioContext;
+  if(!AudioContext)return;
+  try{
+    if(!alarmAudio)alarmAudio=new AudioContext();
+    if(alarmAudio.state==='suspended')alarmAudio.resume().catch(error=>console.error('Could not enable timer alarm audio:',error));
+  }catch(error){console.error('Could not enable timer alarm audio:',error)}
+}
+function beep(){
+  if(window.Native)return;
+  if(!alarmAudio){unlockAlarmAudio();if(!alarmAudio)return}
+  const play=()=>{
+    const start=alarmAudio.currentTime+.05;
+    [0,.35,.7].forEach(t=>{
+      const o=alarmAudio.createOscillator(),g=alarmAudio.createGain();
+      o.frequency.value=880;o.connect(g);g.connect(alarmAudio.destination);
+      g.gain.setValueAtTime(.2,start+t);g.gain.exponentialRampToValueAtTime(.001,start+t+.3);
+      o.start(start+t);o.stop(start+t+.3);
+    });
+  };
+  if(alarmAudio.state==='running')play();
+  else alarmAudio.resume().then(play).catch(error=>console.error('Could not play timer alarm:',error));
+}
 if(navigator.vibrate){}
 
 let installPrompt=null;
@@ -662,8 +686,8 @@ $('tcu').onkeydown=e=>{if(e.key==='Enter')applyCustom()};$('tcu').onblur=()=>{if
 $('tpc').onchange=()=>setTopic($('tpc').value);
 $('tpc').onkeydown=e=>{if(e.key==='Enter'){e.preventDefault();setTopic($('tpc').value);$('tpc').blur()}};
 $('main').onclick=()=>{if(S.sub&&$('tpc').value.trim()!==(S.topic||''))setTopic($('tpc').value);if($('tsel').value==='__c'){applyCustom();if($('tsel').value==='__c'){$('tcu').focus();return}}
-  if(!S.run)S.run={start:Date.now(),acc:0,paused:false};
-  else if(S.run.paused){S.run.start=Date.now();S.run.paused=false}
+  if(!S.run){unlockAlarmAudio();S.run={start:Date.now(),acc:0,paused:false}}
+  else if(S.run.paused){unlockAlarmAudio();S.run.start=Date.now();S.run.paused=false}
   else{S.run.acc+=Date.now()-S.run.start;S.run.paused=true}
   save();render()};
 function ask(msg,cb){$('cf_m').textContent=msg;$('cf').classList.add('on');$('cf_y').onclick=()=>{$('cf').classList.remove('on');cb()};$('cf_n').onclick=()=>$('cf').classList.remove('on')}
@@ -764,7 +788,31 @@ const mkName=mk=>MN[+mk.slice(5,7)-1]+' '+bn(mk.slice(0,4));
   S.stv=1;save();
 })();
 const esc=s=>s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-let motivationTimer=null,lastMotivationId=null;
+let motivationTimer=null,motivationScheduleTimer=null,lastMotivationId=null;
+const motivationDelay=(min,max)=>Math.floor((min+Math.random()*(max-min+1))*60000);
+function scheduleMotivation(recoverMissed=false){
+  clearTimeout(motivationScheduleTimer);motivationScheduleTimer=null;
+  if(!S.motivationNotes.length)return;
+  const today=dk(),now=Date.now();
+  if(!S.motivationSchedule||S.motivationSchedule.day!==today)S.motivationSchedule={day:today,nextAt:0,shown:{}};
+  const schedule=S.motivationSchedule;
+  schedule.shown=schedule.shown||{};
+  const ids=new Set(S.motivationNotes.map(note=>note.id));
+  Object.keys(schedule.shown).forEach(id=>{if(!ids.has(id))delete schedule.shown[id]});
+  if(!S.motivationNotes.some(note=>(schedule.shown[note.id]||0)<2)){
+    const tomorrow=new Date();tomorrow.setHours(24,0,0,0);
+    motivationScheduleTimer=setTimeout(()=>scheduleMotivation(),tomorrow.getTime()-now+1000);
+    return;
+  }
+  if(!schedule.nextAt)schedule.nextAt=now+motivationDelay(10,30);
+  else if(schedule.nextAt<=now)schedule.nextAt=now+motivationDelay(recoverMissed?10:5,recoverMissed?20:15);
+  save();
+  motivationScheduleTimer=setTimeout(()=>{
+    if(document.hidden||$('pg-home').style.display==='none'){scheduleMotivation(true);return}
+    showMotivation();
+    scheduleMotivation();
+  },Math.max(0,schedule.nextAt-Date.now()));
+}
 function hideMotivation(){
   clearTimeout(motivationTimer);motivationTimer=null;
   $('motivationCard').hidden=true;
@@ -773,8 +821,15 @@ function hideMotivation(){
 function showMotivation(){
   hideMotivation();
   if(!S.motivationNotes.length)return;
-  const choices=S.motivationNotes.length>1?S.motivationNotes.filter(n=>n.id!==lastMotivationId):S.motivationNotes;
+  const schedule=S.motivationSchedule,shown=schedule.shown;
+  const eligible=S.motivationNotes.filter(note=>(shown[note.id]||0)<2);
+  if(!eligible.length)return;
+  const leastShown=Math.min(...eligible.map(note=>shown[note.id]||0));
+  const choices=eligible.filter(note=>(shown[note.id]||0)===leastShown);
   const note=choices[Math.floor(Math.random()*choices.length)];
+  shown[note.id]=(shown[note.id]||0)+1;
+  schedule.nextAt=Date.now()+motivationDelay(45,90);
+  save();
   lastMotivationId=note.id;
   $('motivationText').textContent=note.text;
   $('motivationCard').hidden=false;
@@ -805,7 +860,7 @@ $('tw').onclick=()=>tab(0);$('tm').onclick=()=>tab(1);$('ts').onclick=()=>tab(2)
 function page(n){
   ['home','stats','ach','notes'].forEach(x=>{$('pg-'+x).style.display=x===n?'block':'none';$('nv-'+x).classList.toggle('on',x===n)});
   try{window.scrollTo(0,0)}catch(e){}
-  if(n==='home')showMotivation();else hideMotivation();
+  if(n==='home')scheduleMotivation();else hideMotivation();
   if(n==='stats'){stats();subj()}
   if(n==='ach'){ach();tl();render()}
   if(n==='notes')renderNotes();
@@ -816,13 +871,13 @@ $('noteInput').oninput=e=>{$('noteLength').textContent=bn(e.target.value.length)
 $('noteAdd').onclick=()=>{
   const text=$('noteInput').value.trim();if(!text)return;
   S.motivationNotes.unshift({id:rid(),text});
-  save();$('noteInput').value='';$('noteLength').textContent='০';$('noteAdd').disabled=true;renderNotes();
+  save();$('noteInput').value='';$('noteLength').textContent='০';$('noteAdd').disabled=true;renderNotes();scheduleMotivation();
 };
 $('noteInput').onkeydown=e=>{if(e.key==='Enter'&&(e.ctrlKey||e.metaKey)){$('noteAdd').click()}};
 $('noteList').onclick=e=>{
   const button=e.target.closest('.note-delete');if(!button)return;
   S.motivationNotes=S.motivationNotes.filter(note=>note.id!==button.dataset.noteId);
-  save();renderNotes();
+  save();renderNotes();scheduleMotivation();
 };
 document.addEventListener('focusin',e=>{if(['tcu','tpc'].includes(e.target.id))$('nav').style.display='none'});
 document.addEventListener('focusout',e=>{if(['tcu','tpc'].includes(e.target.id))$('nav').style.display='flex'});
@@ -832,8 +887,8 @@ $('week').onclick=e=>{const c=e.target.closest('.col');if(c&&c.dataset.k){selW=c
 $('mgrid').onclick=e=>{const c=e.target.closest('.cd');if(c&&c.dataset.k){selM=c.dataset.k;month()}};
 $('mnext').onclick=()=>{if(mo<0){mo++;month()}};
 setInterval(()=>{if(S.run&&!S.run.paused){const g=mode().g;if(g&&el()>=g){beep();finish(true);return}render()}},500);
-document.addEventListener('visibilitychange',()=>{if(!document.hidden){render();checkInstalledApp()}});
-render();stats();curUI();subOpts();tab(2);renderNotes();showMotivation();if(S.pending)showSummary();
+document.addEventListener('visibilitychange',()=>{if(!document.hidden){render();checkInstalledApp();scheduleMotivation(true)}});
+render();stats();curUI();subOpts();tab(2);renderNotes();scheduleMotivation();if(S.pending)showSummary();
 setTimeout(()=>{const s=$('splash');if(s){s.classList.add('hide');setTimeout(()=>s.remove(),600)}},1800);
 </script>
 </body>

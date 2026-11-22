@@ -7,8 +7,6 @@
 <meta name="theme-color" content="#12935a">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="স্টাডি টাইমার">
-<link rel="manifest" href="./manifest.webmanifest">
-<link rel="apple-touch-icon" href="./icons/icon-192.png">
 <style>
 :root{--bg:#f4f5fb;--card:#fff;--tx:#1b1e33;--mut:#7a7f9e;--ac:#12935a;--ac2:#4cc38a;--ok:#12b886;--line:#e6e8f3;--warn:#f59f00;
 box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
@@ -240,6 +238,102 @@ input[type=range]{width:100%;accent-color:var(--ac)}
 #installHelp{align-items:flex-end;padding:0}
 #installHelp .sheet{width:100%;max-width:440px;border-radius:24px 24px 0 0;padding:24px 20px calc(20px + env(safe-area-inset-bottom,0px));text-align:left}
 #installHelp .install-actions{margin-top:18px}
+
+/* ===== কম্পিউটার ভিউ (ডেস্কটপ) ===== */
+@media (min-width:900px){
+  body{display:block}
+  .app{width:auto;max-width:none;margin:0 0 0 250px;padding:36px 48px 56px}
+  .page{max-width:1180px;margin:0 auto}
+  /* বাম পাশের সাইডবার */
+  #nav{top:0;right:auto;bottom:0;width:250px;display:flex!important;flex-direction:column;justify-content:flex-start;align-items:stretch;border-top:0;border-right:1px solid var(--line);padding:26px 14px}
+  #nav:before{content:"📚 স্টাডি টাইমার";display:block;padding:4px 14px 22px;font-size:20px;font-weight:800;color:var(--ac)}
+  #nav .in{flex-direction:column;max-width:none;gap:6px}
+  #nav button{flex:none;flex-direction:row;justify-content:flex-start;gap:13px;padding:13px 16px;border-radius:14px;font-size:15px;transition:background .15s}
+  #nav button:hover{background:color-mix(in srgb,var(--ac) 8%,var(--card))}
+  #nav button.on{background:color-mix(in srgb,var(--ac) 13%,var(--card))}
+  #nav button svg{width:22px;height:22px}
+  .card,.maker{margin-bottom:0;padding:24px;border-radius:24px}
+  .card.achievement{padding:0}
+  h1{font-size:24px}
+  /* হোম: বামে টাইমার, ডানে আজকের অর্জন */
+  #pg-home{display:grid;grid-template-columns:minmax(0,1fr) 380px;gap:24px;align-items:stretch}
+  #pg-home>.card:nth-child(2){order:1;padding:30px 34px}
+  #pg-home>.achievement{order:2;display:flex}
+  #pg-home .achievement-content{flex:1;display:flex;flex-direction:column;justify-content:center}
+  #pg-home .achievement-content{padding:28px 30px}
+  #pg-home .achievement-grade{font-size:22px}#pg-home .achievement-title{font-size:15px}#pg-home .achievement-target{font-size:16px}#pg-home .achievement-progress{height:9px}
+  #pg-home .achievement-time{font-size:46px;margin-top:10px}
+  .ringwrap{width:300px;height:300px;margin:10px auto 14px}
+  .time{font-size:50px}
+  .av svg{width:92px;height:92px}
+  .chips{margin:6px 0 20px}.chip{padding:8px 18px;font-size:15px}
+  .subject-picker{max-width:560px;margin:0 auto 14px}
+  .tdx{max-width:560px;display:block;margin-left:auto;margin-right:auto}
+  .btns{max-width:560px;margin:0 auto}
+  button.b{font-size:18px;padding:16px;transition:filter .15s}button.b:hover{filter:brightness(1.07)}
+  /* পরিসংখ্যান */
+  .stats-heading{padding:0 2px 18px}.stats-heading h2{font-size:30px}
+  .tabs{max-width:none}
+  .stats-panel{display:grid;grid-template-columns:minmax(0,440px) minmax(0,1fr);gap:20px;align-items:stretch}
+  .stats-panel>.week-nav{grid-column:1/-1;max-width:520px;margin:0 auto 4px;width:100%}
+  .stats-panel>.stats-card{margin-top:0;padding:24px}
+  .week-hero{padding:24px;display:flex;flex-direction:column;justify-content:center}.week-hero-total{font-size:36px}
+  .week-tiles span{font-size:11.5px}.week-tiles b{font-size:15px}
+  #pw>.stats-card{grid-column:2}#pw>.week-hero{grid-column:1}
+  #pw>.week-detail{grid-column:1/-1}
+  .col{padding:10px 4px 12px}.col-track{height:190px}.col-amount{font-size:12px;height:16px}.col-label{font-size:12px}.col-label b{font-size:15px}
+  .week{gap:10px}
+  #pm>.week-hero{grid-column:1;grid-row:2}
+  #pm>.stats-card:nth-child(3){grid-column:2;grid-row:2/4}
+  #pm>.stats-card:nth-child(4){grid-column:1;grid-row:3}
+  #pm>#md{grid-column:1/-1;grid-row:4}
+  .mh{gap:8px}.mh.hd{font-size:13px}.cd{aspect-ratio:1.15;font-size:15px;cursor:pointer;border-radius:14px}.cd small{font-size:11px;height:13px}
+  .mw{grid-template-columns:96px 1fr auto}.mw span b{font-size:14px}.mw .bar{height:12px}.mw>b{font-size:14px}
+  /* অর্জন — নতুন ডেস্কটপ ডিজাইন */
+  #pg-ach{display:grid;grid-template-columns:320px minmax(0,1fr);gap:22px;align-items:stretch}
+  #pg-ach>.maker{flex-direction:column;justify-content:center;text-align:center;gap:12px;padding:30px 24px}
+  .maker-photo{width:108px;height:108px;border-width:3px}
+  .maker-sub{font-size:13px}.maker-name{font-size:24px}
+  #pg-ach>.card:not(#pa){display:flex;flex-direction:column;justify-content:center;padding:28px 34px}
+  #pg-ach .goal-range{margin:28px 4px 8px}
+  #pg-ach .goal-range-labels{font-size:13px}
+  .stages{margin-top:22px;gap:4px}.stages span svg{max-width:54px}
+  #pg-ach>.card:not(#pa)>.mut{margin-top:14px!important;font-size:14px}
+  #pa{display:contents}
+  #pa>b{grid-column:1/-1;margin-top:20px;font-size:22px}
+  #pa>.mut{grid-column:1/-1;margin:-12px 0 2px!important;font-size:14px}
+  #llist,#tlist{grid-column:1/-1;display:grid;gap:14px}
+  #llist{grid-template-columns:repeat(6,minmax(0,1fr))}
+  #llist>.level-step:last-child{grid-column:1/-1;flex-direction:row;justify-content:flex-start;text-align:left;gap:22px;padding:16px 28px}
+  #llist>.level-step:last-child .tree-step-icon{width:92px;flex:none}
+  #llist>.level-step:last-child .tree-step-copy{align-items:flex-start;flex:1}
+  #llist>.level-step:last-child .tree-step-title{font-size:18px}
+  #llist>.level-step:last-child .tree-step-description{font-size:13px}
+  #llist>.level-step:last-child .tree-step-status{margin:0 0 0 auto}
+  #tlist{grid-template-columns:repeat(6,minmax(0,1fr))}
+  .tree-step{flex-direction:column;align-items:center;text-align:center;gap:10px;margin-top:0;padding:18px 12px 14px;border-radius:22px;background:var(--card);box-shadow:0 4px 14px rgba(20,25,50,.05)}
+  .tree-step:hover{transform:translateY(-4px)}
+  .tree-step-icon{width:100%;max-width:124px;height:auto;aspect-ratio:1;border-radius:20px}
+  .level-step .tree-step-icon{max-width:92px}
+  .tree-step-copy{display:flex;flex-direction:column;align-items:center;flex:1}
+  .tree-step-title{font-size:15px}.level-step .tree-step-title{font-size:14px}
+  .tree-step-description{font-size:12px}
+  .tree-step-status{margin-top:auto}
+  .tree-step.locked .tree-step-icon{filter:grayscale(.9);opacity:.5}
+  .tree-step.unlocked{box-shadow:0 8px 22px color-mix(in srgb,var(--ok) 16%,transparent)}
+  .level-step.unlocked{box-shadow:0 8px 22px color-mix(in srgb,#f0ad3d 20%,transparent)}
+  /* পপআপ */
+  .sheet{max-width:420px;padding:32px}
+  ::-webkit-scrollbar{width:11px}::-webkit-scrollbar-thumb{background:var(--line);border-radius:99px;border:3px solid var(--bg)}
+}
+@media (min-width:900px) and (max-width:1250px){
+  #pg-home{grid-template-columns:minmax(0,1fr) 320px}
+  #pg-ach{grid-template-columns:280px minmax(0,1fr)}
+  #llist{grid-template-columns:repeat(4,minmax(0,1fr))}
+  #tlist{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .stats-panel{grid-template-columns:minmax(0,1fr)}
+  #pw>.stats-card,#pw>.week-hero,#pm>.week-hero,#pm>.stats-card:nth-child(3),#pm>.stats-card:nth-child(4),#pm>#md{grid-column:1;grid-row:auto}
+}
 </style>
 </head>
 <body>
@@ -892,10 +986,10 @@ function subOpts(){
   S.subj=S.subj||[];
   const t=$('tsel'),tc=t.value;t.innerHTML=optHTML('📖 বিষয় বাছুন (ঐচ্ছিক)');if(tc==='__c')t.value='__c';curUI();renderSubjectOptions();
 }
-function tab(t){['pw','pm'].forEach((p,i)=>$(p).style.display=i===t?'block':'none');['tw','tm'].forEach((p,i)=>{const selected=i===t;$(p).classList.toggle('on',selected);$(p).setAttribute('aria-selected',selected)});stats()}
+function tab(t){['pw','pm'].forEach((p,i)=>$(p).style.display=i===t?'':'none');['tw','tm'].forEach((p,i)=>{const selected=i===t;$(p).classList.toggle('on',selected);$(p).setAttribute('aria-selected',selected)});stats()}
 $('tw').onclick=()=>tab(0);$('tm').onclick=()=>tab(1);
 function page(n){
-  ['home','stats','ach'].forEach(x=>{$('pg-'+x).style.display=x===n?'block':'none';$('nv-'+x).classList.toggle('on',x===n)});
+  ['home','stats','ach'].forEach(x=>{$('pg-'+x).style.display=x===n?'':'none';$('nv-'+x).classList.toggle('on',x===n)});
   try{window.scrollTo(0,0)}catch(e){}
   if(n==='stats')stats();
   if(n==='ach'){ach();tl();render()}

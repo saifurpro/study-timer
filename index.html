@@ -334,6 +334,30 @@ input[type=range]{width:100%;accent-color:var(--ac)}
   .stats-panel{grid-template-columns:minmax(0,1fr)}
   #pw>.stats-card,#pw>.week-hero,#pm>.week-hero,#pm>.stats-card:nth-child(3),#pm>.stats-card:nth-child(4),#pm>#md{grid-column:1;grid-row:auto}
 }
+/* হোম: পুরো স্ক্রিন উচ্চতা, স্ক্রলবার ছাড়া */
+@media (min-width:900px){
+  html:has(#pg-home:not([style*="none"])){overflow:hidden}
+  #pg-home{height:calc(100vh - 92px);min-height:440px}
+  #pg-home>.card:nth-child(2){display:flex;flex-direction:column;justify-content:center;min-height:0;padding:clamp(14px,3vh,30px) 34px}
+  #pg-home .chips{margin:0 0 clamp(6px,1.6vh,18px);flex:none}
+  #pg-home .ringwrap{flex:1 1 0;min-height:110px;max-height:560px;width:auto;height:auto;aspect-ratio:1/1;align-self:center;margin:0 0 clamp(8px,1.8vh,16px)}
+  #pg-home .time{font-size:clamp(30px,6.2vh,72px)}
+  #pg-home .av svg{width:clamp(48px,10vh,120px);height:clamp(48px,10vh,120px)}
+  #pg-home .subject-picker{flex:none;width:100%;margin-bottom:clamp(8px,1.5vh,14px)}
+  #pg-home .subject-picker-menu{top:auto;bottom:calc(100% + 7px)}
+  #pg-home .tdx{flex:none;width:100%}
+  #pg-home .btns{flex:none;width:100%}
+  #pg-home .subject-picker,#pg-home .tdx,#pg-home .btns{max-width:560px;align-self:center}
+  #pg-home>.achievement{min-height:0}
+}
+@media (min-width:900px) and (max-width:1250px){
+  #pg-home{grid-template-columns:minmax(0,1fr) 270px}
+  #pg-home>.card:nth-child(2){padding-left:20px;padding-right:20px}
+  #pg-home .chips{flex-wrap:nowrap;gap:6px}
+  #pg-home .chip{padding:7px 11px;font-size:13.5px;white-space:nowrap}
+  #pg-home .achievement-content{padding:22px}
+  #pg-home .achievement-time{font-size:36px}
+}
 </style>
 </head>
 <body>

@@ -60,6 +60,8 @@ svg.ring{width:100%;height:100%;transform:rotate(-90deg)}
 button.b{flex:1;border:0;border-radius:16px;padding:15px;font:inherit;font-size:17px;font-weight:700;cursor:pointer;color:#fff;background:var(--ac)}
 button.b.sec{background:var(--bg);color:var(--tx);border:1px solid var(--line)}
 button.b.stop{background:#e8590c}
+button.b.go{background:#12935a}
+button.b.pause{background:#2563eb}
 button:disabled{opacity:.4}
 .stats-heading{padding:7px 2px 16px}
 .stats-eyebrow{color:var(--ac);font-size:12px;font-weight:700;letter-spacing:.5px}
@@ -789,7 +791,7 @@ function render(){sync();
   const pr=todaySec/tgtSec,sn=stg(todaySec);
   const achievement=dayLv(todaySec),targetReached=todaySec>=tgtSec;
   const award=targetReached?{en:'Gold Achiever',e:'🏆'}:achievement;
-  $('achievementGrade').textContent=award?award.en.toUpperCase()+' '+award.e:'📖 আজকের পড়া শুরু করুন';
+  $('achievementGrade').textContent=award?award.en.toUpperCase()+' '+award.e:(S.run&&!S.run.paused?'🔥 পড়া চলছে… Be Focused.':S.run?'⏸ বিরতিতে আছেন ':todaySec>0?'📖 আবার পড়া শুরু করুন':'📖 আজকের পড়া শুরু করুন');
   $('achievementGrade').classList.toggle('done',targetReached);
   $('achievementTime').textContent=hms(todaySec);
   $('achievementTarget').textContent=bn(S.target)+' ঘণ্টা';
@@ -801,6 +803,7 @@ function render(){sync();
   $('fg').style.strokeDashoffset=565.5*(1-Math.min(1,todaySec/tgtSec));
   $('tgtv').textContent=hm(tgtSec);$('tgt').setAttribute('aria-valuetext',hm(tgtSec));$('tgt').style.setProperty('--range-progress',((S.target-1)/11*100)+'%');
   $('main').textContent=!S.run?'▶ শুরু':S.run.paused?'▶ চালু করুন':'⏸ বিরতি';
+  $('main').className='b '+(!S.run||S.run.paused?'go':'pause');
   $('stop').style.display=S.run?'block':'none';
   $('modes').innerHTML=MODES.map(x=>`<button class="chip${x.k===S.mode?' on':''}" data-k="${x.k}" ${S.run?'disabled':''}>${x.t}</button>`).join('');
 
